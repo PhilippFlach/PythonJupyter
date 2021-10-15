@@ -1,0 +1,631 @@
+<!DOCTYPE html>
+<!-- saved from url=(0080)https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.linprog.html -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    
+    <title>scipy.optimize.linprog — SciPy v1.6.0 Reference Guide</title>
+    
+    <link rel="stylesheet" type="text/css" href="./scipy.optimize.linprog (SciPy v1.6.0 Reference Guide)_files/spc-bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="./scipy.optimize.linprog (SciPy v1.6.0 Reference Guide)_files/spc-extend.css">
+    <link rel="stylesheet" href="./scipy.optimize.linprog (SciPy v1.6.0 Reference Guide)_files/scipy.css" type="text/css">
+    <link rel="stylesheet" href="./scipy.optimize.linprog (SciPy v1.6.0 Reference Guide)_files/pygments.css" type="text/css">
+    
+    <script type="text/javascript" id="documentation_options" data-url_root="../" src="./scipy.optimize.linprog (SciPy v1.6.0 Reference Guide)_files/documentation_options.js.download"></script>
+    <script type="text/javascript" src="./scipy.optimize.linprog (SciPy v1.6.0 Reference Guide)_files/jquery.js.download"></script>
+    <script type="text/javascript" src="./scipy.optimize.linprog (SciPy v1.6.0 Reference Guide)_files/underscore.js.download"></script>
+    <script type="text/javascript" src="./scipy.optimize.linprog (SciPy v1.6.0 Reference Guide)_files/doctools.js.download"></script>
+    <script type="text/javascript" src="./scipy.optimize.linprog (SciPy v1.6.0 Reference Guide)_files/language_data.js.download"></script>
+    <script type="text/javascript" src="./scipy.optimize.linprog (SciPy v1.6.0 Reference Guide)_files/versioncheck.js.download"></script><script type="text/javascript" src="./scipy.optimize.linprog (SciPy v1.6.0 Reference Guide)_files/versionwarning.js.download"></script>
+    <script type="text/javascript" src="./scipy.optimize.linprog (SciPy v1.6.0 Reference Guide)_files/MathJax.js.download"></script>
+    <script type="text/javascript" src="./scipy.optimize.linprog (SciPy v1.6.0 Reference Guide)_files/copybutton.js.download"></script>
+    <link rel="index" title="Index" href="https://docs.scipy.org/doc/scipy/reference/genindex.html">
+    <link rel="search" title="Search" href="https://docs.scipy.org/doc/scipy/reference/search.html">
+    <link rel="top" title="SciPy v1.6.0 Reference Guide" href="https://docs.scipy.org/doc/scipy/reference/index.html">
+    <link rel="up" title="Optimization and root finding (scipy.optimize)" href="https://docs.scipy.org/doc/scipy/reference/optimize.html">
+    <link rel="next" title="linprog(method=’simplex’)" href="https://docs.scipy.org/doc/scipy/reference/optimize.linprog-simplex.html">
+    <link rel="prev" title="root(method=’df-sane’)" href="https://docs.scipy.org/doc/scipy/reference/optimize.root-dfsane.html"> 
+  <style></style><style type="text/css">.MathJax_Preview {color: #888}
+#MathJax_Message {position: fixed; left: 1em; bottom: 1.5em; background-color: #E6E6E6; border: 1px solid #959595; margin: 0px; padding: 2px 8px; z-index: 102; color: black; font-size: 80%; width: auto; white-space: nowrap}
+#MathJax_MSIE_Frame {position: absolute; top: 0; left: 0; width: 0px; z-index: 101; border: 0px; margin: 0px; padding: 0px}
+.MathJax_Error {color: #CC0000; font-style: italic}
+</style><style type="text/css">.MJX_Assistive_MathML {position: absolute!important; top: 0; left: 0; clip: rect(1px, 1px, 1px, 1px); padding: 1px 0 0 0!important; border: 0!important; height: 1px!important; width: 1px!important; overflow: hidden!important; display: block!important; -webkit-touch-callout: none; -webkit-user-select: none; -khtml-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none}
+.MJX_Assistive_MathML.MJX_Assistive_MathML_Block {width: 100%!important}
+</style><style type="text/css">.MathJax_Preview .MJXf-math {color: inherit!important}
+</style><style type="text/css">.MathJax_Hover_Frame {border-radius: .25em; -webkit-border-radius: .25em; -moz-border-radius: .25em; -khtml-border-radius: .25em; box-shadow: 0px 0px 15px #83A; -webkit-box-shadow: 0px 0px 15px #83A; -moz-box-shadow: 0px 0px 15px #83A; -khtml-box-shadow: 0px 0px 15px #83A; border: 1px solid #A6D ! important; display: inline-block; position: absolute}
+.MathJax_Menu_Button .MathJax_Hover_Arrow {position: absolute; cursor: pointer; display: inline-block; border: 2px solid #AAA; border-radius: 4px; -webkit-border-radius: 4px; -moz-border-radius: 4px; -khtml-border-radius: 4px; font-family: 'Courier New',Courier; font-size: 9px; color: #F0F0F0}
+.MathJax_Menu_Button .MathJax_Hover_Arrow span {display: block; background-color: #AAA; border: 1px solid; border-radius: 3px; line-height: 0; padding: 4px}
+.MathJax_Hover_Arrow:hover {color: white!important; border: 2px solid #CCC!important}
+.MathJax_Hover_Arrow:hover span {background-color: #CCC!important}
+</style><style type="text/css">.MathJax_SVG_Display {text-align: center; margin: 1em 0em; position: relative; display: block!important; text-indent: 0; max-width: none; max-height: none; min-width: 0; min-height: 0; width: 100%}
+.MathJax_SVG .MJX-monospace {font-family: monospace}
+.MathJax_SVG .MJX-sans-serif {font-family: sans-serif}
+#MathJax_SVG_Tooltip {background-color: InfoBackground; color: InfoText; border: 1px solid black; box-shadow: 2px 2px 5px #AAAAAA; -webkit-box-shadow: 2px 2px 5px #AAAAAA; -moz-box-shadow: 2px 2px 5px #AAAAAA; -khtml-box-shadow: 2px 2px 5px #AAAAAA; padding: 3px 4px; z-index: 401; position: absolute; left: 0; top: 0; width: auto; height: auto; display: none}
+.MathJax_SVG {display: inline; font-style: normal; font-weight: normal; line-height: normal; font-size: 100%; font-size-adjust: none; text-indent: 0; text-align: left; text-transform: none; letter-spacing: normal; word-spacing: normal; word-wrap: normal; white-space: nowrap; float: none; direction: ltr; max-width: none; max-height: none; min-width: 0; min-height: 0; border: 0; padding: 0; margin: 0}
+.MathJax_SVG * {transition: none; -webkit-transition: none; -moz-transition: none; -ms-transition: none; -o-transition: none}
+.mjx-svg-href {fill: blue; stroke: blue}
+.MathJax_SVG_Processing {visibility: hidden; position: absolute; top: 0; left: 0; width: 0; height: 0; overflow: hidden; display: block!important}
+.MathJax_SVG_Processed {display: none!important}
+.MathJax_SVG_ExBox {display: block!important; overflow: hidden; width: 1px; height: 60ex; min-height: 0; max-height: none; padding: 0; border: 0; margin: 0}
+.MathJax_SVG_LineBox {display: table!important}
+.MathJax_SVG_LineBox span {display: table-cell!important; width: 10000em!important; min-width: 0; max-width: none; padding: 0; border: 0; margin: 0}
+.MathJax_SVG .noError {vertical-align: ; font-size: 90%; text-align: left; color: black; padding: 1px 3px; border: 1px solid}
+</style><style type="text/css">.MJXp-script {font-size: .8em}
+.MJXp-right {-webkit-transform-origin: right; -moz-transform-origin: right; -ms-transform-origin: right; -o-transform-origin: right; transform-origin: right}
+.MJXp-bold {font-weight: bold}
+.MJXp-italic {font-style: italic}
+.MJXp-scr {font-family: MathJax_Script,'Times New Roman',Times,STIXGeneral,serif}
+.MJXp-frak {font-family: MathJax_Fraktur,'Times New Roman',Times,STIXGeneral,serif}
+.MJXp-sf {font-family: MathJax_SansSerif,'Times New Roman',Times,STIXGeneral,serif}
+.MJXp-cal {font-family: MathJax_Caligraphic,'Times New Roman',Times,STIXGeneral,serif}
+.MJXp-mono {font-family: MathJax_Typewriter,'Times New Roman',Times,STIXGeneral,serif}
+.MJXp-largeop {font-size: 150%}
+.MJXp-largeop.MJXp-int {vertical-align: -.2em}
+.MJXp-math {display: inline-block; line-height: 1.2; text-indent: 0; font-family: 'Times New Roman',Times,STIXGeneral,serif; white-space: nowrap; border-collapse: collapse}
+.MJXp-display {display: block; text-align: center; margin: 1em 0}
+.MJXp-math span {display: inline-block}
+.MJXp-box {display: block!important; text-align: center}
+.MJXp-box:after {content: " "}
+.MJXp-rule {display: block!important; margin-top: .1em}
+.MJXp-char {display: block!important}
+.MJXp-mo {margin: 0 .15em}
+.MJXp-mfrac {margin: 0 .125em; vertical-align: .25em}
+.MJXp-denom {display: inline-table!important; width: 100%}
+.MJXp-denom > * {display: table-row!important}
+.MJXp-surd {vertical-align: top}
+.MJXp-surd > * {display: block!important}
+.MJXp-script-box > *  {display: table!important; height: 50%}
+.MJXp-script-box > * > * {display: table-cell!important; vertical-align: top}
+.MJXp-script-box > *:last-child > * {vertical-align: bottom}
+.MJXp-script-box > * > * > * {display: block!important}
+.MJXp-mphantom {visibility: hidden}
+.MJXp-munderover {display: inline-table!important}
+.MJXp-over {display: inline-block!important; text-align: center}
+.MJXp-over > * {display: block!important}
+.MJXp-munderover > * {display: table-row!important}
+.MJXp-mtable {vertical-align: .25em; margin: 0 .125em}
+.MJXp-mtable > * {display: inline-table!important; vertical-align: middle}
+.MJXp-mtr {display: table-row!important}
+.MJXp-mtd {display: table-cell!important; text-align: center; padding: .5em 0 0 .5em}
+.MJXp-mtr > .MJXp-mtd:first-child {padding-left: 0}
+.MJXp-mtr:first-child > .MJXp-mtd {padding-top: 0}
+.MJXp-mlabeledtr {display: table-row!important}
+.MJXp-mlabeledtr > .MJXp-mtd:first-child {padding-left: 0}
+.MJXp-mlabeledtr:first-child > .MJXp-mtd {padding-top: 0}
+.MJXp-merror {background-color: #FFFF88; color: #CC0000; border: 1px solid #CC0000; padding: 1px 3px; font-style: normal; font-size: 90%}
+.MJXp-scale0 {-webkit-transform: scaleX(.0); -moz-transform: scaleX(.0); -ms-transform: scaleX(.0); -o-transform: scaleX(.0); transform: scaleX(.0)}
+.MJXp-scale1 {-webkit-transform: scaleX(.1); -moz-transform: scaleX(.1); -ms-transform: scaleX(.1); -o-transform: scaleX(.1); transform: scaleX(.1)}
+.MJXp-scale2 {-webkit-transform: scaleX(.2); -moz-transform: scaleX(.2); -ms-transform: scaleX(.2); -o-transform: scaleX(.2); transform: scaleX(.2)}
+.MJXp-scale3 {-webkit-transform: scaleX(.3); -moz-transform: scaleX(.3); -ms-transform: scaleX(.3); -o-transform: scaleX(.3); transform: scaleX(.3)}
+.MJXp-scale4 {-webkit-transform: scaleX(.4); -moz-transform: scaleX(.4); -ms-transform: scaleX(.4); -o-transform: scaleX(.4); transform: scaleX(.4)}
+.MJXp-scale5 {-webkit-transform: scaleX(.5); -moz-transform: scaleX(.5); -ms-transform: scaleX(.5); -o-transform: scaleX(.5); transform: scaleX(.5)}
+.MJXp-scale6 {-webkit-transform: scaleX(.6); -moz-transform: scaleX(.6); -ms-transform: scaleX(.6); -o-transform: scaleX(.6); transform: scaleX(.6)}
+.MJXp-scale7 {-webkit-transform: scaleX(.7); -moz-transform: scaleX(.7); -ms-transform: scaleX(.7); -o-transform: scaleX(.7); transform: scaleX(.7)}
+.MJXp-scale8 {-webkit-transform: scaleX(.8); -moz-transform: scaleX(.8); -ms-transform: scaleX(.8); -o-transform: scaleX(.8); transform: scaleX(.8)}
+.MJXp-scale9 {-webkit-transform: scaleX(.9); -moz-transform: scaleX(.9); -ms-transform: scaleX(.9); -o-transform: scaleX(.9); transform: scaleX(.9)}
+.MathJax_PHTML .noError {vertical-align: ; font-size: 90%; text-align: left; color: black; padding: 1px 3px; border: 1px solid}
+</style></head>
+  <body psrtouched="true"><div style="visibility: hidden; overflow: hidden; position: absolute; top: 0px; height: 1px; width: auto; padding: 0px; border: 0px; margin: 0px; text-align: left; text-indent: 0px; text-transform: none; line-height: normal; letter-spacing: normal; word-spacing: normal;"><div id="MathJax_SVG_Hidden"></div><svg><defs id="MathJax_SVG_glyphs"><path stroke-width="1" id="MJMAIN-6D" d="M41 46H55Q94 46 102 60V68Q102 77 102 91T102 122T103 161T103 203Q103 234 103 269T102 328V351Q99 370 88 376T43 385H25V408Q25 431 27 431L37 432Q47 433 65 434T102 436Q119 437 138 438T167 441T178 442H181V402Q181 364 182 364T187 369T199 384T218 402T247 421T285 437Q305 442 336 442Q351 442 364 440T387 434T406 426T421 417T432 406T441 395T448 384T452 374T455 366L457 361L460 365Q463 369 466 373T475 384T488 397T503 410T523 422T546 432T572 439T603 442Q729 442 740 329Q741 322 741 190V104Q741 66 743 59T754 49Q775 46 803 46H819V0H811L788 1Q764 2 737 2T699 3Q596 3 587 0H579V46H595Q656 46 656 62Q657 64 657 200Q656 335 655 343Q649 371 635 385T611 402T585 404Q540 404 506 370Q479 343 472 315T464 232V168V108Q464 78 465 68T468 55T477 49Q498 46 526 46H542V0H534L510 1Q487 2 460 2T422 3Q319 3 310 0H302V46H318Q379 46 379 62Q380 64 380 200Q379 335 378 343Q372 371 358 385T334 402T308 404Q263 404 229 370Q202 343 195 315T187 232V168V108Q187 78 188 68T191 55T200 49Q221 46 249 46H265V0H257L234 1Q210 2 183 2T145 3Q42 3 33 0H25V46H41Z"></path><path stroke-width="1" id="MJMAIN-69" d="M69 609Q69 637 87 653T131 669Q154 667 171 652T188 609Q188 579 171 564T129 549Q104 549 87 564T69 609ZM247 0Q232 3 143 3Q132 3 106 3T56 1L34 0H26V46H42Q70 46 91 49Q100 53 102 60T104 102V205V293Q104 345 102 359T88 378Q74 385 41 385H30V408Q30 431 32 431L42 432Q52 433 70 434T106 436Q123 437 142 438T171 441T182 442H185V62Q190 52 197 50T232 46H255V0H247Z"></path><path stroke-width="1" id="MJMAIN-6E" d="M41 46H55Q94 46 102 60V68Q102 77 102 91T102 122T103 161T103 203Q103 234 103 269T102 328V351Q99 370 88 376T43 385H25V408Q25 431 27 431L37 432Q47 433 65 434T102 436Q119 437 138 438T167 441T178 442H181V402Q181 364 182 364T187 369T199 384T218 402T247 421T285 437Q305 442 336 442Q450 438 463 329Q464 322 464 190V104Q464 66 466 59T477 49Q498 46 526 46H542V0H534L510 1Q487 2 460 2T422 3Q319 3 310 0H302V46H318Q379 46 379 62Q380 64 380 200Q379 335 378 343Q372 371 358 385T334 402T308 404Q263 404 229 370Q202 343 195 315T187 232V168V108Q187 78 188 68T191 55T200 49Q221 46 249 46H265V0H257L234 1Q210 2 183 2T145 3Q42 3 33 0H25V46H41Z"></path><path stroke-width="1" id="MJMATHI-78" d="M52 289Q59 331 106 386T222 442Q257 442 286 424T329 379Q371 442 430 442Q467 442 494 420T522 361Q522 332 508 314T481 292T458 288Q439 288 427 299T415 328Q415 374 465 391Q454 404 425 404Q412 404 406 402Q368 386 350 336Q290 115 290 78Q290 50 306 38T341 26Q378 26 414 59T463 140Q466 150 469 151T485 153H489Q504 153 504 145Q504 144 502 134Q486 77 440 33T333 -11Q263 -11 227 52Q186 -10 133 -10H127Q78 -10 57 16T35 71Q35 103 54 123T99 143Q142 143 142 101Q142 81 130 66T107 46T94 41L91 40Q91 39 97 36T113 29T132 26Q168 26 194 71Q203 87 217 139T245 247T261 313Q266 340 266 352Q266 380 251 392T217 404Q177 404 142 372T93 290Q91 281 88 280T72 278H58Q52 284 52 289Z"></path><path stroke-width="1" id="MJMATHI-63" d="M34 159Q34 268 120 355T306 442Q362 442 394 418T427 355Q427 326 408 306T360 285Q341 285 330 295T319 325T330 359T352 380T366 386H367Q367 388 361 392T340 400T306 404Q276 404 249 390Q228 381 206 359Q162 315 142 235T121 119Q121 73 147 50Q169 26 205 26H209Q321 26 394 111Q403 121 406 121Q410 121 419 112T429 98T420 83T391 55T346 25T282 0T202 -11Q127 -11 81 37T34 159Z"></path><path stroke-width="1" id="MJMATHI-54" d="M40 437Q21 437 21 445Q21 450 37 501T71 602L88 651Q93 669 101 677H569H659Q691 677 697 676T704 667Q704 661 687 553T668 444Q668 437 649 437Q640 437 637 437T631 442L629 445Q629 451 635 490T641 551Q641 586 628 604T573 629Q568 630 515 631Q469 631 457 630T439 622Q438 621 368 343T298 60Q298 48 386 46Q418 46 427 45T436 36Q436 31 433 22Q429 4 424 1L422 0Q419 0 415 0Q410 0 363 1T228 2Q99 2 64 0H49Q43 6 43 9T45 27Q49 40 55 46H83H94Q174 46 189 55Q190 56 191 56Q196 59 201 76T241 233Q258 301 269 344Q339 619 339 625Q339 630 310 630H279Q212 630 191 624Q146 614 121 583T67 467Q60 445 57 441T43 437H40Z"></path><path stroke-width="1" id="MJMAIN-73" d="M295 316Q295 356 268 385T190 414Q154 414 128 401Q98 382 98 349Q97 344 98 336T114 312T157 287Q175 282 201 278T245 269T277 256Q294 248 310 236T342 195T359 133Q359 71 321 31T198 -10H190Q138 -10 94 26L86 19L77 10Q71 4 65 -1L54 -11H46H42Q39 -11 33 -5V74V132Q33 153 35 157T45 162H54Q66 162 70 158T75 146T82 119T101 77Q136 26 198 26Q295 26 295 104Q295 133 277 151Q257 175 194 187T111 210Q75 227 54 256T33 318Q33 357 50 384T93 424T143 442T187 447H198Q238 447 268 432L283 424L292 431Q302 440 314 448H322H326Q329 448 335 442V310L329 304H301Q295 310 295 316Z"></path><path stroke-width="1" id="MJMAIN-75" d="M383 58Q327 -10 256 -10H249Q124 -10 105 89Q104 96 103 226Q102 335 102 348T96 369Q86 385 36 385H25V408Q25 431 27 431L38 432Q48 433 67 434T105 436Q122 437 142 438T172 441T184 442H187V261Q188 77 190 64Q193 49 204 40Q224 26 264 26Q290 26 311 35T343 58T363 90T375 120T379 144Q379 145 379 161T380 201T380 248V315Q380 361 370 372T320 385H302V431Q304 431 378 436T457 442H464V264Q464 84 465 81Q468 61 479 55T524 46H542V0Q540 0 467 -5T390 -11H383V58Z"></path><path stroke-width="1" id="MJMAIN-63" d="M370 305T349 305T313 320T297 358Q297 381 312 396Q317 401 317 402T307 404Q281 408 258 408Q209 408 178 376Q131 329 131 219Q131 137 162 90Q203 29 272 29Q313 29 338 55T374 117Q376 125 379 127T395 129H409Q415 123 415 120Q415 116 411 104T395 71T366 33T318 2T249 -11Q163 -11 99 53T34 214Q34 318 99 383T250 448T370 421T404 357Q404 334 387 320Z"></path><path stroke-width="1" id="MJMAIN-68" d="M41 46H55Q94 46 102 60V68Q102 77 102 91T102 124T102 167T103 217T103 272T103 329Q103 366 103 407T103 482T102 542T102 586T102 603Q99 622 88 628T43 637H25V660Q25 683 27 683L37 684Q47 685 66 686T103 688Q120 689 140 690T170 693T181 694H184V367Q244 442 328 442Q451 442 463 329Q464 322 464 190V104Q464 66 466 59T477 49Q498 46 526 46H542V0H534L510 1Q487 2 460 2T422 3Q319 3 310 0H302V46H318Q379 46 379 62Q380 64 380 200Q379 335 378 343Q372 371 358 385T334 402T308 404Q263 404 229 370Q202 343 195 315T187 232V168V108Q187 78 188 68T191 55T200 49Q221 46 249 46H265V0H257L234 1Q210 2 183 2T145 3Q42 3 33 0H25V46H41Z"></path><path stroke-width="1" id="MJMAIN-74" d="M27 422Q80 426 109 478T141 600V615H181V431H316V385H181V241Q182 116 182 100T189 68Q203 29 238 29Q282 29 292 100Q293 108 293 146V181H333V146V134Q333 57 291 17Q264 -10 221 -10Q187 -10 162 2T124 33T105 68T98 100Q97 107 97 248V385H18V422H27Z"></path><path stroke-width="1" id="MJMAIN-61" d="M137 305T115 305T78 320T63 359Q63 394 97 421T218 448Q291 448 336 416T396 340Q401 326 401 309T402 194V124Q402 76 407 58T428 40Q443 40 448 56T453 109V145H493V106Q492 66 490 59Q481 29 455 12T400 -6T353 12T329 54V58L327 55Q325 52 322 49T314 40T302 29T287 17T269 6T247 -2T221 -8T190 -11Q130 -11 82 20T34 107Q34 128 41 147T68 188T116 225T194 253T304 268H318V290Q318 324 312 340Q290 411 215 411Q197 411 181 410T156 406T148 403Q170 388 170 359Q170 334 154 320ZM126 106Q126 75 150 51T209 26Q247 26 276 49T315 109Q317 116 318 175Q318 233 317 233Q309 233 296 232T251 223T193 203T147 166T126 106Z"></path><path stroke-width="1" id="MJMATHI-41" d="M208 74Q208 50 254 46Q272 46 272 35Q272 34 270 22Q267 8 264 4T251 0Q249 0 239 0T205 1T141 2Q70 2 50 0H42Q35 7 35 11Q37 38 48 46H62Q132 49 164 96Q170 102 345 401T523 704Q530 716 547 716H555H572Q578 707 578 706L606 383Q634 60 636 57Q641 46 701 46Q726 46 726 36Q726 34 723 22Q720 7 718 4T704 0Q701 0 690 0T651 1T578 2Q484 2 455 0H443Q437 6 437 9T439 27Q443 40 445 43L449 46H469Q523 49 533 63L521 213H283L249 155Q208 86 208 74ZM516 260Q516 271 504 416T490 562L463 519Q447 492 400 412L310 260L413 259Q516 259 516 260Z"></path><path stroke-width="1" id="MJMATHI-75" d="M21 287Q21 295 30 318T55 370T99 420T158 442Q204 442 227 417T250 358Q250 340 216 246T182 105Q182 62 196 45T238 27T291 44T328 78L339 95Q341 99 377 247Q407 367 413 387T427 416Q444 431 463 431Q480 431 488 421T496 402L420 84Q419 79 419 68Q419 43 426 35T447 26Q469 29 482 57T512 145Q514 153 532 153Q551 153 551 144Q550 139 549 130T540 98T523 55T498 17T462 -8Q454 -10 438 -10Q372 -10 347 46Q345 45 336 36T318 21T296 6T267 -6T233 -11Q189 -11 155 7Q103 38 103 113Q103 170 138 262T173 379Q173 380 173 381Q173 390 173 393T169 400T158 404H154Q131 404 112 385T82 344T65 302T57 280Q55 278 41 278H27Q21 284 21 287Z"></path><path stroke-width="1" id="MJMATHI-62" d="M73 647Q73 657 77 670T89 683Q90 683 161 688T234 694Q246 694 246 685T212 542Q204 508 195 472T180 418L176 399Q176 396 182 402Q231 442 283 442Q345 442 383 396T422 280Q422 169 343 79T173 -11Q123 -11 82 27T40 150V159Q40 180 48 217T97 414Q147 611 147 623T109 637Q104 637 101 637H96Q86 637 83 637T76 640T73 647ZM336 325V331Q336 405 275 405Q258 405 240 397T207 376T181 352T163 330L157 322L136 236Q114 150 114 114Q114 66 138 42Q154 26 178 26Q211 26 245 58Q270 81 285 114T318 219Q336 291 336 325Z"></path><path stroke-width="1" id="MJMAIN-2264" d="M674 636Q682 636 688 630T694 615T687 601Q686 600 417 472L151 346L399 228Q687 92 691 87Q694 81 694 76Q694 58 676 56H670L382 192Q92 329 90 331Q83 336 83 348Q84 359 96 365Q104 369 382 500T665 634Q669 636 674 636ZM84 -118Q84 -108 99 -98H678Q694 -104 694 -118Q694 -130 679 -138H98Q84 -131 84 -118Z"></path><path stroke-width="1" id="MJMAIN-2C" d="M78 35T78 60T94 103T137 121Q165 121 187 96T210 8Q210 -27 201 -60T180 -117T154 -158T130 -185T117 -194Q113 -194 104 -185T95 -172Q95 -168 106 -156T131 -126T157 -76T173 -3V9L172 8Q170 7 167 6T161 3T152 1T140 0Q113 0 96 17Z"></path><path stroke-width="1" id="MJMATHI-65" d="M39 168Q39 225 58 272T107 350T174 402T244 433T307 442H310Q355 442 388 420T421 355Q421 265 310 237Q261 224 176 223Q139 223 138 221Q138 219 132 186T125 128Q125 81 146 54T209 26T302 45T394 111Q403 121 406 121Q410 121 419 112T429 98T420 82T390 55T344 24T281 -1T205 -11Q126 -11 83 42T39 168ZM373 353Q367 405 305 405Q272 405 244 391T199 357T170 316T154 280T149 261Q149 260 169 260Q282 260 327 284T373 353Z"></path><path stroke-width="1" id="MJMATHI-71" d="M33 157Q33 258 109 349T280 441Q340 441 372 389Q373 390 377 395T388 406T404 418Q438 442 450 442Q454 442 457 439T460 434Q460 425 391 149Q320 -135 320 -139Q320 -147 365 -148H390Q396 -156 396 -157T393 -175Q389 -188 383 -194H370Q339 -192 262 -192Q234 -192 211 -192T174 -192T157 -193Q143 -193 143 -185Q143 -182 145 -170Q149 -154 152 -151T172 -148Q220 -148 230 -141Q238 -136 258 -53T279 32Q279 33 272 29Q224 -10 172 -10Q117 -10 75 30T33 157ZM352 326Q329 405 277 405Q242 405 210 374T160 293Q131 214 119 129Q119 126 119 118T118 106Q118 61 136 44T179 26Q233 26 290 98L298 109L352 326Z"></path><path stroke-width="1" id="MJMAIN-3D" d="M56 347Q56 360 70 367H707Q722 359 722 347Q722 336 708 328L390 327H72Q56 332 56 347ZM56 153Q56 168 72 173H708Q722 163 722 153Q722 140 707 133H70Q56 140 56 153Z"></path><path stroke-width="1" id="MJMATHI-6C" d="M117 59Q117 26 142 26Q179 26 205 131Q211 151 215 152Q217 153 225 153H229Q238 153 241 153T246 151T248 144Q247 138 245 128T234 90T214 43T183 6T137 -11Q101 -11 70 11T38 85Q38 97 39 102L104 360Q167 615 167 623Q167 626 166 628T162 632T157 634T149 635T141 636T132 637T122 637Q112 637 109 637T101 638T95 641T94 647Q94 649 96 661Q101 680 107 682T179 688Q194 689 213 690T243 693T254 694Q266 694 266 686Q266 675 193 386T118 83Q118 81 118 75T117 65V59Z"></path><path stroke-width="1" id="MJMAIN-30" d="M96 585Q152 666 249 666Q297 666 345 640T423 548Q460 465 460 320Q460 165 417 83Q397 41 362 16T301 -15T250 -22Q224 -22 198 -16T137 16T82 83Q39 165 39 320Q39 494 96 585ZM321 597Q291 629 250 629Q208 629 178 597Q153 571 145 525T137 333Q137 175 145 125T181 46Q209 16 250 16Q290 16 318 46Q347 76 354 130T362 333Q362 478 354 524T321 597Z"></path><path stroke-width="1" id="MJMAIN-31" d="M213 578L200 573Q186 568 160 563T102 556H83V602H102Q149 604 189 617T245 641T273 663Q275 666 285 666Q294 666 302 660V361L303 61Q310 54 315 52T339 48T401 46H427V0H416Q395 3 257 3Q121 3 100 0H88V46H114Q136 46 152 46T177 47T193 50T201 52T207 57T213 61V578Z"></path><path stroke-width="1" id="MJMAIN-2212" d="M84 237T84 250T98 270H679Q694 262 694 250T679 230H98Q84 237 84 250Z"></path><path stroke-width="1" id="MJMAIN-2B" d="M56 237T56 250T70 270H369V420L370 570Q380 583 389 583Q402 583 409 568V270H707Q722 262 722 250T707 230H409V-68Q401 -82 391 -82H389H387Q375 -82 369 -68V230H70Q56 237 56 250Z"></path><path stroke-width="1" id="MJMAIN-34" d="M462 0Q444 3 333 3Q217 3 199 0H190V46H221Q241 46 248 46T265 48T279 53T286 61Q287 63 287 115V165H28V211L179 442Q332 674 334 675Q336 677 355 677H373L379 671V211H471V165H379V114Q379 73 379 66T385 54Q393 47 442 46H471V0H462ZM293 211V545L74 212L183 211H293Z"></path><path stroke-width="1" id="MJMAIN-33" d="M127 463Q100 463 85 480T69 524Q69 579 117 622T233 665Q268 665 277 664Q351 652 390 611T430 522Q430 470 396 421T302 350L299 348Q299 347 308 345T337 336T375 315Q457 262 457 175Q457 96 395 37T238 -22Q158 -22 100 21T42 130Q42 158 60 175T105 193Q133 193 151 175T169 130Q169 119 166 110T159 94T148 82T136 74T126 70T118 67L114 66Q165 21 238 21Q293 21 321 74Q338 107 338 175V195Q338 290 274 322Q259 328 213 329L171 330L168 332Q166 335 166 348Q166 366 174 366Q202 366 232 371Q266 376 294 413T322 525V533Q322 590 287 612Q265 626 240 626Q208 626 181 615T143 592T132 580H135Q138 579 143 578T153 573T165 566T175 555T183 540T186 520Q186 498 172 481T127 463Z"></path><path stroke-width="1" id="MJMAIN-36" d="M42 313Q42 476 123 571T303 666Q372 666 402 630T432 550Q432 525 418 510T379 495Q356 495 341 509T326 548Q326 592 373 601Q351 623 311 626Q240 626 194 566Q147 500 147 364L148 360Q153 366 156 373Q197 433 263 433H267Q313 433 348 414Q372 400 396 374T435 317Q456 268 456 210V192Q456 169 451 149Q440 90 387 34T253 -22Q225 -22 199 -14T143 16T92 75T56 172T42 313ZM257 397Q227 397 205 380T171 335T154 278T148 216Q148 133 160 97T198 39Q222 21 251 21Q302 21 329 59Q342 77 347 104T352 209Q352 289 347 316T329 361Q302 397 257 397Z"></path><path stroke-width="1" id="MJMAIN-32" d="M109 429Q82 429 66 447T50 491Q50 562 103 614T235 666Q326 666 387 610T449 465Q449 422 429 383T381 315T301 241Q265 210 201 149L142 93L218 92Q375 92 385 97Q392 99 409 186V189H449V186Q448 183 436 95T421 3V0H50V19V31Q50 38 56 46T86 81Q115 113 136 137Q145 147 170 174T204 211T233 244T261 278T284 308T305 340T320 369T333 401T340 431T343 464Q343 527 309 573T212 619Q179 619 154 602T119 569T109 550Q109 549 114 549Q132 549 151 535T170 489Q170 464 154 447T109 429Z"></path><path stroke-width="1" id="MJMAIN-2265" d="M83 616Q83 624 89 630T99 636Q107 636 253 568T543 431T687 361Q694 356 694 346T687 331Q685 329 395 192L107 56H101Q83 58 83 76Q83 77 83 79Q82 86 98 95Q117 105 248 167Q326 204 378 228L626 346L360 472Q291 505 200 548Q112 589 98 597T83 616ZM84 -118Q84 -108 99 -98H678Q694 -104 694 -118Q694 -130 679 -138H98Q84 -131 84 -118Z"></path><path stroke-width="1" id="MJMAIN-2E" d="M78 60Q78 84 95 102T138 120Q162 120 180 104T199 61Q199 36 182 18T139 0T96 17T78 60Z"></path><path stroke-width="1" id="MJMAIN-221E" d="M55 217Q55 305 111 373T254 442Q342 442 419 381Q457 350 493 303L507 284L514 294Q618 442 747 442Q833 442 888 374T944 214Q944 128 889 59T743 -11Q657 -11 580 50Q542 81 506 128L492 147L485 137Q381 -11 252 -11Q166 -11 111 57T55 217ZM907 217Q907 285 869 341T761 397Q740 397 720 392T682 378T648 359T619 335T594 310T574 285T559 263T548 246L543 238L574 198Q605 158 622 138T664 94T714 61T765 51Q827 51 867 100T907 217ZM92 214Q92 145 131 89T239 33Q357 33 456 193L425 233Q364 312 334 337Q285 380 233 380Q171 380 132 331T92 214Z"></path></defs></svg></div><div id="MathJax_Message" style="display: none;"></div>
+
+<div class="container">
+  <div class="top-scipy-org-logo-header">
+    <a href="https://docs.scipy.org/doc/scipy/reference/index.html">
+      <img style="border: 0;" alt="SciPy" src="./scipy.optimize.linprog (SciPy v1.6.0 Reference Guide)_files/scipy_org_logo.png"></a>
+    </div>
+  </div>
+
+
+
+    <div class="container">
+      <div class="main">
+        
+	<div class="row-fluid">
+	  <div class="span12">
+	    <div class="spc-navbar">
+              
+    <ul class="nav nav-pills pull-left">
+        <li class="active"><a href="https://scipy.org/">SciPy.org</a></li>
+        <li class="active"><a href="https://docs.scipy.org/">Docs</a></li>
+	
+        <li class="active"><a href="https://docs.scipy.org/doc/scipy/reference/index.html">SciPy v1.6.0 Reference Guide</a></li>
+	
+          <li class="active"><a href="https://docs.scipy.org/doc/scipy/reference/optimize.html" accesskey="U">Optimization and root finding (<code class="xref py py-mod docutils literal notranslate"><span class="pre">scipy.optimize</span></code>)</a></li> 
+    </ul>
+              
+              
+    <ul class="nav nav-pills pull-right">
+      <li class="active">
+        <a href="https://docs.scipy.org/doc/scipy/reference/genindex.html" title="General Index" accesskey="I">index</a>
+      </li>
+      <li class="active">
+        <a href="https://docs.scipy.org/doc/scipy/reference/py-modindex.html" title="Python Module Index">modules</a>
+      </li>
+      <li class="active">
+        <a href="https://docs.scipy.org/doc/scipy/reference/optimize.linprog-simplex.html" title="linprog(method=’simplex’)" accesskey="N">next</a>
+      </li>
+      <li class="active">
+        <a href="https://docs.scipy.org/doc/scipy/reference/optimize.root-dfsane.html" title="root(method=’df-sane’)" accesskey="P">previous</a>
+      </li>
+    </ul>
+              
+	    </div>
+	  </div>
+	</div>
+        
+
+	<div class="row-fluid">
+          <div class="span9">
+            
+        <div class="bodywrapper">
+          <div class="body" id="spc-section-body">
+            
+  <div class="section" id="scipy-optimize-linprog">
+<h1>scipy.optimize.linprog<a class="headerlink" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.linprog.html#scipy-optimize-linprog" title="Permalink to this headline">¶</a></h1>
+<dl class="py function">
+<dt id="scipy.optimize.linprog">
+<code class="sig-prename descclassname">scipy.optimize.</code><code class="sig-name descname">linprog</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">c</span></em>, <em class="sig-param"><span class="n">A_ub</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">b_ub</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">A_eq</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">b_eq</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">bounds</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">method</span><span class="o">=</span><span class="default_value">'interior-point'</span></em>, <em class="sig-param"><span class="n">callback</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">options</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">x0</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/scipy/scipy/blob/v1.6.0/scipy/optimize/_linprog.py#L169-L669"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.linprog.html#scipy.optimize.linprog" title="Permalink to this definition">¶</a></dt>
+<dd><p>Linear programming: minimize a linear objective function subject to linear
+equality and inequality constraints.</p>
+<p>Linear programming solves problems of the following form:</p>
+<div class="math notranslate nohighlight">
+<span class="MathJax_Preview" style="color: inherit; display: none;"></span><div class="MathJax_SVG_Display" style="text-align: center;"><span class="MathJax_SVG" id="MathJax-Element-1-Frame" tabindex="0" style="font-size: 100%; display: inline-block; position: relative;" data-mathml="&lt;math xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot; display=&quot;block&quot;&gt;&lt;mtable columnalign=&quot;right left&quot; rowspacing=&quot;3pt&quot; columnspacing=&quot;0em&quot; displaystyle=&quot;true&quot;&gt;&lt;mtr&gt;&lt;mtd&gt;&lt;munder&gt;&lt;mo movablelimits=&quot;true&quot; form=&quot;prefix&quot;&gt;min&lt;/mo&gt;&lt;mi&gt;x&lt;/mi&gt;&lt;/munder&gt;&lt;mtext&gt;&amp;#xA0;&lt;/mtext&gt;&lt;/mtd&gt;&lt;mtd&gt;&lt;msup&gt;&lt;mi&gt;c&lt;/mi&gt;&lt;mi&gt;T&lt;/mi&gt;&lt;/msup&gt;&lt;mi&gt;x&lt;/mi&gt;&lt;/mtd&gt;&lt;/mtr&gt;&lt;mtr&gt;&lt;mtd&gt;&lt;mstyle displaystyle=&quot;false&quot; scriptlevel=&quot;0&quot;&gt;&lt;mtext&gt;such that&lt;/mtext&gt;&lt;/mstyle&gt;&lt;mtext&gt;&amp;#xA0;&lt;/mtext&gt;&lt;/mtd&gt;&lt;mtd&gt;&lt;msub&gt;&lt;mi&gt;A&lt;/mi&gt;&lt;mrow class=&quot;MJX-TeXAtom-ORD&quot;&gt;&lt;mi&gt;u&lt;/mi&gt;&lt;mi&gt;b&lt;/mi&gt;&lt;/mrow&gt;&lt;/msub&gt;&lt;mi&gt;x&lt;/mi&gt;&lt;mo&gt;&amp;#x2264;&lt;/mo&gt;&lt;msub&gt;&lt;mi&gt;b&lt;/mi&gt;&lt;mrow class=&quot;MJX-TeXAtom-ORD&quot;&gt;&lt;mi&gt;u&lt;/mi&gt;&lt;mi&gt;b&lt;/mi&gt;&lt;/mrow&gt;&lt;/msub&gt;&lt;mo&gt;,&lt;/mo&gt;&lt;/mtd&gt;&lt;/mtr&gt;&lt;mtr&gt;&lt;mtd /&gt;&lt;mtd&gt;&lt;msub&gt;&lt;mi&gt;A&lt;/mi&gt;&lt;mrow class=&quot;MJX-TeXAtom-ORD&quot;&gt;&lt;mi&gt;e&lt;/mi&gt;&lt;mi&gt;q&lt;/mi&gt;&lt;/mrow&gt;&lt;/msub&gt;&lt;mi&gt;x&lt;/mi&gt;&lt;mo&gt;=&lt;/mo&gt;&lt;msub&gt;&lt;mi&gt;b&lt;/mi&gt;&lt;mrow class=&quot;MJX-TeXAtom-ORD&quot;&gt;&lt;mi&gt;e&lt;/mi&gt;&lt;mi&gt;q&lt;/mi&gt;&lt;/mrow&gt;&lt;/msub&gt;&lt;mo&gt;,&lt;/mo&gt;&lt;/mtd&gt;&lt;/mtr&gt;&lt;mtr&gt;&lt;mtd /&gt;&lt;mtd&gt;&lt;mi&gt;l&lt;/mi&gt;&lt;mo&gt;&amp;#x2264;&lt;/mo&gt;&lt;mi&gt;x&lt;/mi&gt;&lt;mo&gt;&amp;#x2264;&lt;/mo&gt;&lt;mi&gt;u&lt;/mi&gt;&lt;mo&gt;,&lt;/mo&gt;&lt;/mtd&gt;&lt;/mtr&gt;&lt;/mtable&gt;&lt;/math&gt;" role="presentation"><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="22.278ex" height="13.502ex" viewBox="0 -3153.9 9592 5813.4" role="img" focusable="false" style="vertical-align: -6.177ex;" aria-hidden="true"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="matrix(1 0 0 -1 0 0)"><g transform="translate(167,0)"><g transform="translate(-13,0)"><g transform="translate(2202,2152)"><use href="#MJMAIN-6D"></use><use href="#MJMAIN-69" x="833" y="0"></use><use href="#MJMAIN-6E" x="1112" y="0"></use><use transform="scale(0.707)" href="#MJMATHI-78" x="893" y="-850"></use></g><g transform="translate(0,343)"><use href="#MJMAIN-73"></use><use href="#MJMAIN-75" x="394" y="0"></use><use href="#MJMAIN-63" x="951" y="0"></use><use href="#MJMAIN-68" x="1395" y="0"></use><use href="#MJMAIN-74" x="2202" y="0"></use><use href="#MJMAIN-68" x="2591" y="0"></use><use href="#MJMAIN-61" x="3148" y="0"></use><use href="#MJMAIN-74" x="3648" y="0"></use></g></g><g transform="translate(4275,0)"><g transform="translate(0,2152)"><use href="#MJMATHI-63" x="0" y="0"></use><use transform="scale(0.707)" href="#MJMATHI-54" x="613" y="583"></use><use href="#MJMATHI-78" x="1031" y="0"></use></g><g transform="translate(0,343)"><use href="#MJMATHI-41" x="0" y="0"></use><g transform="translate(750,-150)"><use transform="scale(0.707)" href="#MJMATHI-75" x="0" y="0"></use><use transform="scale(0.707)" href="#MJMATHI-62" x="572" y="0"></use></g><use href="#MJMATHI-78" x="1559" y="0"></use><use href="#MJMAIN-2264" x="2409" y="0"></use><g transform="translate(3465,0)"><use href="#MJMATHI-62" x="0" y="0"></use><g transform="translate(429,-150)"><use transform="scale(0.707)" href="#MJMATHI-75" x="0" y="0"></use><use transform="scale(0.707)" href="#MJMATHI-62" x="572" y="0"></use></g></g><use href="#MJMAIN-2C" x="4703" y="0"></use></g><g transform="translate(0,-957)"><use href="#MJMATHI-41" x="0" y="0"></use><g transform="translate(750,-150)"><use transform="scale(0.707)" href="#MJMATHI-65" x="0" y="0"></use><use transform="scale(0.707)" href="#MJMATHI-71" x="466" y="0"></use></g><use href="#MJMATHI-78" x="1505" y="0"></use><use href="#MJMAIN-3D" x="2356" y="0"></use><g transform="translate(3412,0)"><use href="#MJMATHI-62" x="0" y="0"></use><g transform="translate(429,-150)"><use transform="scale(0.707)" href="#MJMATHI-65" x="0" y="0"></use><use transform="scale(0.707)" href="#MJMATHI-71" x="466" y="0"></use></g></g><use href="#MJMAIN-2C" x="4597" y="0"></use></g><g transform="translate(0,-2345)"><use href="#MJMATHI-6C" x="0" y="0"></use><use href="#MJMAIN-2264" x="576" y="0"></use><use href="#MJMATHI-78" x="1632" y="0"></use><use href="#MJMAIN-2264" x="2482" y="0"></use><use href="#MJMATHI-75" x="3539" y="0"></use><use href="#MJMAIN-2C" x="4111" y="0"></use></g></g></g></g></svg><span class="MJX_Assistive_MathML MJX_Assistive_MathML_Block" role="presentation"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mtable columnalign="right left" rowspacing="3pt" columnspacing="0em" displaystyle="true"><mtr><mtd><munder><mo movablelimits="true" form="prefix">min</mo><mi>x</mi></munder><mtext>&nbsp;</mtext></mtd><mtd><msup><mi>c</mi><mi>T</mi></msup><mi>x</mi></mtd></mtr><mtr><mtd><mstyle displaystyle="false" scriptlevel="0"><mtext>such that</mtext></mstyle><mtext>&nbsp;</mtext></mtd><mtd><msub><mi>A</mi><mrow class="MJX-TeXAtom-ORD"><mi>u</mi><mi>b</mi></mrow></msub><mi>x</mi><mo>≤</mo><msub><mi>b</mi><mrow class="MJX-TeXAtom-ORD"><mi>u</mi><mi>b</mi></mrow></msub><mo>,</mo></mtd></mtr><mtr><mtd></mtd><mtd><msub><mi>A</mi><mrow class="MJX-TeXAtom-ORD"><mi>e</mi><mi>q</mi></mrow></msub><mi>x</mi><mo>=</mo><msub><mi>b</mi><mrow class="MJX-TeXAtom-ORD"><mi>e</mi><mi>q</mi></mrow></msub><mo>,</mo></mtd></mtr><mtr><mtd></mtd><mtd><mi>l</mi><mo>≤</mo><mi>x</mi><mo>≤</mo><mi>u</mi><mo>,</mo></mtd></mtr></mtable></math></span></span></div><script type="math/tex; mode=display" id="MathJax-Element-1">\begin{split}\min_x \ & c^T x \\
+\mbox{such that} \ & A_{ub} x \leq b_{ub},\\
+& A_{eq} x = b_{eq},\\
+& l \leq x \leq u ,\end{split}</script></div>
+<p>where <span class="math notranslate nohighlight"><span class="MathJax_Preview" style="color: inherit; display: none;"></span><span class="MathJax_SVG" id="MathJax-Element-2-Frame" tabindex="0" data-mathml="&lt;math xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;&gt;&lt;mi&gt;x&lt;/mi&gt;&lt;/math&gt;" role="presentation" style="font-size: 100%; display: inline-block; position: relative;"><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="1.33ex" height="1.588ex" viewBox="0 -558.2 572.5 683.8" role="img" focusable="false" style="vertical-align: -0.292ex;" aria-hidden="true"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="matrix(1 0 0 -1 0 0)"><use href="#MJMATHI-78" x="0" y="0"></use></g></svg><span class="MJX_Assistive_MathML" role="presentation"><math xmlns="http://www.w3.org/1998/Math/MathML"><mi>x</mi></math></span></span><script type="math/tex" id="MathJax-Element-2">x</script></span> is a vector of decision variables; <span class="math notranslate nohighlight"><span class="MathJax_Preview" style="color: inherit; display: none;"></span><span class="MathJax_SVG" id="MathJax-Element-3-Frame" tabindex="0" data-mathml="&lt;math xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;&gt;&lt;mi&gt;c&lt;/mi&gt;&lt;/math&gt;" role="presentation" style="font-size: 100%; display: inline-block; position: relative;"><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="1.007ex" height="1.588ex" viewBox="0 -558.2 433.5 683.8" role="img" focusable="false" style="vertical-align: -0.292ex;" aria-hidden="true"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="matrix(1 0 0 -1 0 0)"><use href="#MJMATHI-63" x="0" y="0"></use></g></svg><span class="MJX_Assistive_MathML" role="presentation"><math xmlns="http://www.w3.org/1998/Math/MathML"><mi>c</mi></math></span></span><script type="math/tex" id="MathJax-Element-3">c</script></span>,
+<span class="math notranslate nohighlight"><span class="MathJax_Preview" style="color: inherit; display: none;"></span><span class="MathJax_SVG" id="MathJax-Element-4-Frame" tabindex="0" data-mathml="&lt;math xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;&gt;&lt;msub&gt;&lt;mi&gt;b&lt;/mi&gt;&lt;mrow class=&quot;MJX-TeXAtom-ORD&quot;&gt;&lt;mi&gt;u&lt;/mi&gt;&lt;mi&gt;b&lt;/mi&gt;&lt;/mrow&gt;&lt;/msub&gt;&lt;/math&gt;" role="presentation" style="font-size: 100%; display: inline-block; position: relative;"><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="2.875ex" height="2.449ex" viewBox="0 -805.4 1238 1054.6" role="img" focusable="false" style="vertical-align: -0.579ex;" aria-hidden="true"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="matrix(1 0 0 -1 0 0)"><use href="#MJMATHI-62" x="0" y="0"></use><g transform="translate(429,-150)"><use transform="scale(0.707)" href="#MJMATHI-75" x="0" y="0"></use><use transform="scale(0.707)" href="#MJMATHI-62" x="572" y="0"></use></g></g></svg><span class="MJX_Assistive_MathML" role="presentation"><math xmlns="http://www.w3.org/1998/Math/MathML"><msub><mi>b</mi><mrow class="MJX-TeXAtom-ORD"><mi>u</mi><mi>b</mi></mrow></msub></math></span></span><script type="math/tex" id="MathJax-Element-4">b_{ub}</script></span>, <span class="math notranslate nohighlight"><span class="MathJax_Preview" style="color: inherit; display: none;"></span><span class="MathJax_SVG" id="MathJax-Element-5-Frame" tabindex="0" data-mathml="&lt;math xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;&gt;&lt;msub&gt;&lt;mi&gt;b&lt;/mi&gt;&lt;mrow class=&quot;MJX-TeXAtom-ORD&quot;&gt;&lt;mi&gt;e&lt;/mi&gt;&lt;mi&gt;q&lt;/mi&gt;&lt;/mrow&gt;&lt;/msub&gt;&lt;/math&gt;" role="presentation" style="font-size: 100%; display: inline-block; position: relative;"><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="2.752ex" height="2.737ex" viewBox="0 -805.4 1185 1178.2" role="img" focusable="false" style="vertical-align: -0.866ex;" aria-hidden="true"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="matrix(1 0 0 -1 0 0)"><use href="#MJMATHI-62" x="0" y="0"></use><g transform="translate(429,-150)"><use transform="scale(0.707)" href="#MJMATHI-65" x="0" y="0"></use><use transform="scale(0.707)" href="#MJMATHI-71" x="466" y="0"></use></g></g></svg><span class="MJX_Assistive_MathML" role="presentation"><math xmlns="http://www.w3.org/1998/Math/MathML"><msub><mi>b</mi><mrow class="MJX-TeXAtom-ORD"><mi>e</mi><mi>q</mi></mrow></msub></math></span></span><script type="math/tex" id="MathJax-Element-5">b_{eq}</script></span>, <span class="math notranslate nohighlight"><span class="MathJax_Preview" style="color: inherit; display: none;"></span><span class="MathJax_SVG" id="MathJax-Element-6-Frame" tabindex="0" data-mathml="&lt;math xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;&gt;&lt;mi&gt;l&lt;/mi&gt;&lt;/math&gt;" role="presentation" style="font-size: 100%; display: inline-block; position: relative;"><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="0.693ex" height="2.162ex" viewBox="0 -805.4 298.5 931" role="img" focusable="false" style="vertical-align: -0.292ex;" aria-hidden="true"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="matrix(1 0 0 -1 0 0)"><use href="#MJMATHI-6C" x="0" y="0"></use></g></svg><span class="MJX_Assistive_MathML" role="presentation"><math xmlns="http://www.w3.org/1998/Math/MathML"><mi>l</mi></math></span></span><script type="math/tex" id="MathJax-Element-6">l</script></span>, and <span class="math notranslate nohighlight"><span class="MathJax_Preview" style="color: inherit; display: none;"></span><span class="MathJax_SVG" id="MathJax-Element-7-Frame" tabindex="0" data-mathml="&lt;math xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;&gt;&lt;mi&gt;u&lt;/mi&gt;&lt;/math&gt;" role="presentation" style="font-size: 100%; display: inline-block; position: relative;"><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="1.33ex" height="1.588ex" viewBox="0 -558.2 572.5 683.8" role="img" focusable="false" style="vertical-align: -0.292ex;" aria-hidden="true"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="matrix(1 0 0 -1 0 0)"><use href="#MJMATHI-75" x="0" y="0"></use></g></svg><span class="MJX_Assistive_MathML" role="presentation"><math xmlns="http://www.w3.org/1998/Math/MathML"><mi>u</mi></math></span></span><script type="math/tex" id="MathJax-Element-7">u</script></span> are vectors; and
+<span class="math notranslate nohighlight"><span class="MathJax_Preview" style="color: inherit; display: none;"></span><span class="MathJax_SVG" id="MathJax-Element-8-Frame" tabindex="0" data-mathml="&lt;math xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;&gt;&lt;msub&gt;&lt;mi&gt;A&lt;/mi&gt;&lt;mrow class=&quot;MJX-TeXAtom-ORD&quot;&gt;&lt;mi&gt;u&lt;/mi&gt;&lt;mi&gt;b&lt;/mi&gt;&lt;/mrow&gt;&lt;/msub&gt;&lt;/math&gt;" role="presentation" style="font-size: 100%; display: inline-block; position: relative;"><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="3.621ex" height="2.449ex" viewBox="0 -805.4 1559 1054.6" role="img" focusable="false" style="vertical-align: -0.579ex;" aria-hidden="true"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="matrix(1 0 0 -1 0 0)"><use href="#MJMATHI-41" x="0" y="0"></use><g transform="translate(750,-150)"><use transform="scale(0.707)" href="#MJMATHI-75" x="0" y="0"></use><use transform="scale(0.707)" href="#MJMATHI-62" x="572" y="0"></use></g></g></svg><span class="MJX_Assistive_MathML" role="presentation"><math xmlns="http://www.w3.org/1998/Math/MathML"><msub><mi>A</mi><mrow class="MJX-TeXAtom-ORD"><mi>u</mi><mi>b</mi></mrow></msub></math></span></span><script type="math/tex" id="MathJax-Element-8">A_{ub}</script></span> and <span class="math notranslate nohighlight"><span class="MathJax_Preview" style="color: inherit; display: none;"></span><span class="MathJax_SVG" id="MathJax-Element-9-Frame" tabindex="0" data-mathml="&lt;math xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;&gt;&lt;msub&gt;&lt;mi&gt;A&lt;/mi&gt;&lt;mrow class=&quot;MJX-TeXAtom-ORD&quot;&gt;&lt;mi&gt;e&lt;/mi&gt;&lt;mi&gt;q&lt;/mi&gt;&lt;/mrow&gt;&lt;/msub&gt;&lt;/math&gt;" role="presentation" style="font-size: 100%; display: inline-block; position: relative;"><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="3.498ex" height="2.737ex" viewBox="0 -805.4 1506 1178.2" role="img" focusable="false" style="vertical-align: -0.866ex;" aria-hidden="true"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="matrix(1 0 0 -1 0 0)"><use href="#MJMATHI-41" x="0" y="0"></use><g transform="translate(750,-150)"><use transform="scale(0.707)" href="#MJMATHI-65" x="0" y="0"></use><use transform="scale(0.707)" href="#MJMATHI-71" x="466" y="0"></use></g></g></svg><span class="MJX_Assistive_MathML" role="presentation"><math xmlns="http://www.w3.org/1998/Math/MathML"><msub><mi>A</mi><mrow class="MJX-TeXAtom-ORD"><mi>e</mi><mi>q</mi></mrow></msub></math></span></span><script type="math/tex" id="MathJax-Element-9">A_{eq}</script></span> are matrices.</p>
+<p>Alternatively, that’s:</p>
+<p>minimize:</p>
+<div class="highlight-default notranslate" style="position: relative;"><div class="highlight"><pre><span></span><span class="n">c</span> <span class="o">@</span> <span class="n">x</span>
+</pre></div>
+</div>
+<p>such that:</p>
+<div class="highlight-default notranslate" style="position: relative;"><div class="highlight"><pre><span></span><span class="n">A_ub</span> <span class="o">@</span> <span class="n">x</span> <span class="o">&lt;=</span> <span class="n">b_ub</span>
+<span class="n">A_eq</span> <span class="o">@</span> <span class="n">x</span> <span class="o">==</span> <span class="n">b_eq</span>
+<span class="n">lb</span> <span class="o">&lt;=</span> <span class="n">x</span> <span class="o">&lt;=</span> <span class="n">ub</span>
+</pre></div>
+</div>
+<p>Note that by default <code class="docutils literal notranslate"><span class="pre">lb</span> <span class="pre">=</span> <span class="pre">0</span></code> and <code class="docutils literal notranslate"><span class="pre">ub</span> <span class="pre">=</span> <span class="pre">None</span></code> unless specified with
+<code class="docutils literal notranslate"><span class="pre">bounds</span></code>.</p>
+<dl class="field-list">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl>
+<dt><strong>c</strong><span class="classifier">1-D array</span></dt><dd><p>The coefficients of the linear objective function to be minimized.</p>
+</dd>
+<dt><strong>A_ub</strong><span class="classifier">2-D array, optional</span></dt><dd><p>The inequality constraint matrix. Each row of <code class="docutils literal notranslate"><span class="pre">A_ub</span></code> specifies the
+coefficients of a linear inequality constraint on <code class="docutils literal notranslate"><span class="pre">x</span></code>.</p>
+</dd>
+<dt><strong>b_ub</strong><span class="classifier">1-D array, optional</span></dt><dd><p>The inequality constraint vector. Each element represents an
+upper bound on the corresponding value of <code class="docutils literal notranslate"><span class="pre">A_ub</span> <span class="pre">@</span> <span class="pre">x</span></code>.</p>
+</dd>
+<dt><strong>A_eq</strong><span class="classifier">2-D array, optional</span></dt><dd><p>The equality constraint matrix. Each row of <code class="docutils literal notranslate"><span class="pre">A_eq</span></code> specifies the
+coefficients of a linear equality constraint on <code class="docutils literal notranslate"><span class="pre">x</span></code>.</p>
+</dd>
+<dt><strong>b_eq</strong><span class="classifier">1-D array, optional</span></dt><dd><p>The equality constraint vector. Each element of <code class="docutils literal notranslate"><span class="pre">A_eq</span> <span class="pre">@</span> <span class="pre">x</span></code> must equal
+the corresponding element of <code class="docutils literal notranslate"><span class="pre">b_eq</span></code>.</p>
+</dd>
+<dt><strong>bounds</strong><span class="classifier">sequence, optional</span></dt><dd><p>A sequence of <code class="docutils literal notranslate"><span class="pre">(min,</span> <span class="pre">max)</span></code> pairs for each element in <code class="docutils literal notranslate"><span class="pre">x</span></code>, defining
+the minimum and maximum values of that decision variable. Use <code class="docutils literal notranslate"><span class="pre">None</span></code>
+to indicate that there is no bound. By default, bounds are
+<code class="docutils literal notranslate"><span class="pre">(0,</span> <span class="pre">None)</span></code> (all decision variables are non-negative).
+If a single tuple <code class="docutils literal notranslate"><span class="pre">(min,</span> <span class="pre">max)</span></code> is provided, then <code class="docutils literal notranslate"><span class="pre">min</span></code> and
+<code class="docutils literal notranslate"><span class="pre">max</span></code> will serve as bounds for all decision variables.</p>
+</dd>
+<dt><strong>method</strong><span class="classifier">str, optional</span></dt><dd><p>The algorithm used to solve the standard form problem.
+<a class="reference internal" href="https://docs.scipy.org/doc/scipy/reference/optimize.linprog-highs-ds.html#optimize-linprog-highs-ds"><span class="std std-ref">‘highs-ds’</span></a>,
+<a class="reference internal" href="https://docs.scipy.org/doc/scipy/reference/optimize.linprog-highs-ipm.html#optimize-linprog-highs-ipm"><span class="std std-ref">‘highs-ipm’</span></a>,
+<a class="reference internal" href="https://docs.scipy.org/doc/scipy/reference/optimize.linprog-highs.html#optimize-linprog-highs"><span class="std std-ref">‘highs’</span></a>,
+<a class="reference internal" href="https://docs.scipy.org/doc/scipy/reference/optimize.linprog-interior-point.html#optimize-linprog-interior-point"><span class="std std-ref">‘interior-point’</span></a> (default),
+<a class="reference internal" href="https://docs.scipy.org/doc/scipy/reference/optimize.linprog-revised_simplex.html#optimize-linprog-revised-simplex"><span class="std std-ref">‘revised simplex’</span></a>, and
+<a class="reference internal" href="https://docs.scipy.org/doc/scipy/reference/optimize.linprog-simplex.html#optimize-linprog-simplex"><span class="std std-ref">‘simplex’</span></a> (legacy)
+are supported.</p>
+</dd>
+<dt><strong>callback</strong><span class="classifier">callable, optional</span></dt><dd><p>If a callback function is provided, it will be called at least once per
+iteration of the algorithm. The callback function must accept a single
+<a class="reference internal" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.OptimizeResult.html#scipy.optimize.OptimizeResult" title="scipy.optimize.OptimizeResult"><code class="xref py py-obj docutils literal notranslate"><span class="pre">scipy.optimize.OptimizeResult</span></code></a> consisting of the following fields:</p>
+<dl>
+<dt>x<span class="classifier">1-D array</span></dt><dd><p>The current solution vector.</p>
+</dd>
+<dt>fun<span class="classifier">float</span></dt><dd><p>The current value of the objective function <code class="docutils literal notranslate"><span class="pre">c</span> <span class="pre">@</span> <span class="pre">x</span></code>.</p>
+</dd>
+<dt>success<span class="classifier">bool</span></dt><dd><p><code class="docutils literal notranslate"><span class="pre">True</span></code> when the algorithm has completed successfully.</p>
+</dd>
+<dt>slack<span class="classifier">1-D array</span></dt><dd><p>The (nominally positive) values of the slack,
+<code class="docutils literal notranslate"><span class="pre">b_ub</span> <span class="pre">-</span> <span class="pre">A_ub</span> <span class="pre">@</span> <span class="pre">x</span></code>.</p>
+</dd>
+<dt>con<span class="classifier">1-D array</span></dt><dd><p>The (nominally zero) residuals of the equality constraints,
+<code class="docutils literal notranslate"><span class="pre">b_eq</span> <span class="pre">-</span> <span class="pre">A_eq</span> <span class="pre">@</span> <span class="pre">x</span></code>.</p>
+</dd>
+<dt>phase<span class="classifier">int</span></dt><dd><p>The phase of the algorithm being executed.</p>
+</dd>
+<dt>status<span class="classifier">int</span></dt><dd><p>An integer representing the status of the algorithm.</p>
+<p><code class="docutils literal notranslate"><span class="pre">0</span></code> : Optimization proceeding nominally.</p>
+<p><code class="docutils literal notranslate"><span class="pre">1</span></code> : Iteration limit reached.</p>
+<p><code class="docutils literal notranslate"><span class="pre">2</span></code> : Problem appears to be infeasible.</p>
+<p><code class="docutils literal notranslate"><span class="pre">3</span></code> : Problem appears to be unbounded.</p>
+<p><code class="docutils literal notranslate"><span class="pre">4</span></code> : Numerical difficulties encountered.</p>
+<dl class="simple">
+<dt>nit<span class="classifier">int</span></dt><dd><p>The current iteration number.</p>
+</dd>
+<dt>message<span class="classifier">str</span></dt><dd><p>A string descriptor of the algorithm status.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<p>Callback functions are not currently supported by the HiGHS methods.</p>
+</dd>
+<dt><strong>options</strong><span class="classifier">dict, optional</span></dt><dd><p>A dictionary of solver options. All methods accept the following
+options:</p>
+<dl class="simple">
+<dt>maxiter<span class="classifier">int</span></dt><dd><p>Maximum number of iterations to perform.
+Default: see method-specific documentation.</p>
+</dd>
+<dt>disp<span class="classifier">bool</span></dt><dd><p>Set to <code class="docutils literal notranslate"><span class="pre">True</span></code> to print convergence messages.
+Default: <code class="docutils literal notranslate"><span class="pre">False</span></code>.</p>
+</dd>
+<dt>presolve<span class="classifier">bool</span></dt><dd><p>Set to <code class="docutils literal notranslate"><span class="pre">False</span></code> to disable automatic presolve.
+Default: <code class="docutils literal notranslate"><span class="pre">True</span></code>.</p>
+</dd>
+</dl>
+<p>All methods except the HiGHS solvers also accept:</p>
+<dl>
+<dt>tol<span class="classifier">float</span></dt><dd><p>A tolerance which determines when a residual is “close enough” to
+zero to be considered exactly zero.</p>
+</dd>
+<dt>autoscale<span class="classifier">bool</span></dt><dd><p>Set to <code class="docutils literal notranslate"><span class="pre">True</span></code> to automatically perform equilibration.
+Consider using this option if the numerical values in the
+constraints are separated by several orders of magnitude.
+Default: <code class="docutils literal notranslate"><span class="pre">False</span></code>.</p>
+</dd>
+<dt>rr<span class="classifier">bool</span></dt><dd><p>Set to <code class="docutils literal notranslate"><span class="pre">False</span></code> to disable automatic redundancy removal.
+Default: <code class="docutils literal notranslate"><span class="pre">True</span></code>.</p>
+</dd>
+<dt>rr_method<span class="classifier">string</span></dt><dd><p>Method used to identify and remove redundant rows from the
+equality constraint matrix after presolve. For problems with
+dense input, the available methods for redundancy removal are:</p>
+<dl class="simple">
+<dt>“SVD”:</dt><dd><p>Repeatedly performs singular value decomposition on
+the matrix, detecting redundant rows based on nonzeros
+in the left singular vectors that correspond with
+zero singular values. May be fast when the matrix is
+nearly full rank.</p>
+</dd>
+<dt>“pivot”:</dt><dd><p>Uses the algorithm presented in <a class="reference internal" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.linprog.html#ree0cad483161-5" id="id1">[5]</a> to identify
+redundant rows.</p>
+</dd>
+<dt>“ID”:</dt><dd><p>Uses a randomized interpolative decomposition.
+Identifies columns of the matrix transpose not used in
+a full-rank interpolative decomposition of the matrix.</p>
+</dd>
+<dt>None:</dt><dd><p>Uses “svd” if the matrix is nearly full rank, that is,
+the difference between the matrix rank and the number
+of rows is less than five. If not, uses “pivot”. The
+behavior of this default is subject to change without
+prior notice.</p>
+</dd>
+</dl>
+<p>Default: None.
+For problems with sparse input, this option is ignored, and the
+pivot-based algorithm presented in <a class="reference internal" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.linprog.html#ree0cad483161-5" id="id2">[5]</a> is used.</p>
+</dd>
+</dl>
+<p>For method-specific options, see
+<a class="reference internal" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.show_options.html#scipy.optimize.show_options" title="scipy.optimize.show_options"><code class="xref py py-func docutils literal notranslate"><span class="pre">show_options('linprog')</span></code></a>.</p>
+</dd>
+<dt><strong>x0</strong><span class="classifier">1-D array, optional</span></dt><dd><p>Guess values of the decision variables, which will be refined by
+the optimization algorithm. This argument is currently used only by the
+‘revised simplex’ method, and can only be used if <em class="xref py py-obj">x0</em> represents a
+basic feasible solution.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl>
+<dt><strong>res</strong><span class="classifier">OptimizeResult</span></dt><dd><p>A <a class="reference internal" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.OptimizeResult.html#scipy.optimize.OptimizeResult" title="scipy.optimize.OptimizeResult"><code class="xref py py-class docutils literal notranslate"><span class="pre">scipy.optimize.OptimizeResult</span></code></a> consisting of the fields:</p>
+<dl>
+<dt>x<span class="classifier">1-D array</span></dt><dd><p>The values of the decision variables that minimizes the
+objective function while satisfying the constraints.</p>
+</dd>
+<dt>fun<span class="classifier">float</span></dt><dd><p>The optimal value of the objective function <code class="docutils literal notranslate"><span class="pre">c</span> <span class="pre">@</span> <span class="pre">x</span></code>.</p>
+</dd>
+<dt>slack<span class="classifier">1-D array</span></dt><dd><p>The (nominally positive) values of the slack variables,
+<code class="docutils literal notranslate"><span class="pre">b_ub</span> <span class="pre">-</span> <span class="pre">A_ub</span> <span class="pre">@</span> <span class="pre">x</span></code>.</p>
+</dd>
+<dt>con<span class="classifier">1-D array</span></dt><dd><p>The (nominally zero) residuals of the equality constraints,
+<code class="docutils literal notranslate"><span class="pre">b_eq</span> <span class="pre">-</span> <span class="pre">A_eq</span> <span class="pre">@</span> <span class="pre">x</span></code>.</p>
+</dd>
+<dt>success<span class="classifier">bool</span></dt><dd><p><code class="docutils literal notranslate"><span class="pre">True</span></code> when the algorithm succeeds in finding an optimal
+solution.</p>
+</dd>
+<dt>status<span class="classifier">int</span></dt><dd><p>An integer representing the exit status of the algorithm.</p>
+<p><code class="docutils literal notranslate"><span class="pre">0</span></code> : Optimization terminated successfully.</p>
+<p><code class="docutils literal notranslate"><span class="pre">1</span></code> : Iteration limit reached.</p>
+<p><code class="docutils literal notranslate"><span class="pre">2</span></code> : Problem appears to be infeasible.</p>
+<p><code class="docutils literal notranslate"><span class="pre">3</span></code> : Problem appears to be unbounded.</p>
+<p><code class="docutils literal notranslate"><span class="pre">4</span></code> : Numerical difficulties encountered.</p>
+</dd>
+<dt>nit<span class="classifier">int</span></dt><dd><p>The total number of iterations performed in all phases.</p>
+</dd>
+<dt>message<span class="classifier">str</span></dt><dd><p>A string descriptor of the exit status of the algorithm.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd>
+</dl>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<dl class="simple">
+<dt><a class="reference internal" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.show_options.html#scipy.optimize.show_options" title="scipy.optimize.show_options"><code class="xref py py-obj docutils literal notranslate"><span class="pre">show_options</span></code></a></dt><dd><p>Additional options accepted by the solvers.</p>
+</dd>
+</dl>
+</div>
+<p class="rubric">Notes</p>
+<p>This section describes the available solvers that can be selected by the
+‘method’ parameter.</p>
+<p><em class="xref py py-obj">‘highs-ds’</em> and
+<em class="xref py py-obj">‘highs-ipm’</em> are interfaces to the
+HiGHS simplex and interior-point method solvers <a class="reference internal" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.linprog.html#ree0cad483161-13" id="id3">[13]</a>, respectively.
+<em class="xref py py-obj">‘highs’</em> chooses between
+the two automatically. These are the fastest linear
+programming solvers in SciPy, especially for large, sparse problems;
+which of these two is faster is problem-dependent.
+<em class="xref py py-obj">‘interior-point’</em> is the default
+as it was the fastest and most robust method before the recent
+addition of the HiGHS solvers.
+<em class="xref py py-obj">‘revised simplex’</em> is more
+accurate than interior-point for the problems it solves.
+<em class="xref py py-obj">‘simplex’</em> is the legacy method and is
+included for backwards compatibility and educational purposes.</p>
+<p>Method <em>highs-ds</em> is a wrapper of the C++ high performance dual
+revised simplex implementation (HSOL) <a class="reference internal" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.linprog.html#ree0cad483161-13" id="id4">[13]</a>, <a class="reference internal" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.linprog.html#ree0cad483161-14" id="id5">[14]</a>. Method <em>highs-ipm</em>
+is a wrapper of a C++ implementation of an <strong>i</strong>nterior-<strong>p</strong>oint
+<strong>m</strong>ethod <a class="reference internal" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.linprog.html#ree0cad483161-13" id="id6">[13]</a>; it features a crossover routine, so it is as accurate
+as a simplex solver. Method <em>highs</em> chooses between the two automatically.
+For new code involving <a class="reference internal" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.linprog.html#scipy.optimize.linprog" title="scipy.optimize.linprog"><code class="xref py py-obj docutils literal notranslate"><span class="pre">linprog</span></code></a>, we recommend explicitly choosing one of
+these three method values.</p>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 1.5.0.</span></p>
+</div>
+<p>Method <em>interior-point</em> uses the primal-dual path following algorithm
+as outlined in <a class="reference internal" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.linprog.html#ree0cad483161-4" id="id7">[4]</a>. This algorithm supports sparse constraint matrices and
+is typically faster than the simplex methods, especially for large, sparse
+problems. Note, however, that the solution returned may be slightly less
+accurate than those of the simplex methods and will not, in general,
+correspond with a vertex of the polytope defined by the constraints.</p>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 1.0.0.</span></p>
+</div>
+<p>Method <em>revised simplex</em> uses the revised simplex method as described in
+<a class="reference internal" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.linprog.html#ree0cad483161-9" id="id8">[9]</a>, except that a factorization <a class="reference internal" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.linprog.html#ree0cad483161-11" id="id9">[11]</a> of the basis matrix, rather than
+its inverse, is efficiently maintained and used to solve the linear systems
+at each iteration of the algorithm.</p>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 1.3.0.</span></p>
+</div>
+<p>Method <em>simplex</em> uses a traditional, full-tableau implementation of
+Dantzig’s simplex algorithm <a class="reference internal" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.linprog.html#ree0cad483161-1" id="id10">[1]</a>, <a class="reference internal" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.linprog.html#ree0cad483161-2" id="id11">[2]</a> (<em>not</em> the
+Nelder-Mead simplex). This algorithm is included for backwards
+compatibility and educational purposes.</p>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 0.15.0.</span></p>
+</div>
+<p>Before applying <em>interior-point</em>, <em>revised simplex</em>, or <em>simplex</em>,
+a presolve procedure based on <a class="reference internal" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.linprog.html#ree0cad483161-8" id="id12">[8]</a> attempts
+to identify trivial infeasibilities, trivial unboundedness, and potential
+problem simplifications. Specifically, it checks for:</p>
+<ul class="simple">
+<li><p>rows of zeros in <code class="docutils literal notranslate"><span class="pre">A_eq</span></code> or <code class="docutils literal notranslate"><span class="pre">A_ub</span></code>, representing trivial constraints;</p></li>
+<li><p>columns of zeros in <code class="docutils literal notranslate"><span class="pre">A_eq</span></code> <em class="xref py py-obj">and</em> <code class="docutils literal notranslate"><span class="pre">A_ub</span></code>, representing unconstrained
+variables;</p></li>
+<li><p>column singletons in <code class="docutils literal notranslate"><span class="pre">A_eq</span></code>, representing fixed variables; and</p></li>
+<li><p>column singletons in <code class="docutils literal notranslate"><span class="pre">A_ub</span></code>, representing simple bounds.</p></li>
+</ul>
+<p>If presolve reveals that the problem is unbounded (e.g. an unconstrained
+and unbounded variable has negative cost) or infeasible (e.g., a row of
+zeros in <code class="docutils literal notranslate"><span class="pre">A_eq</span></code> corresponds with a nonzero in <code class="docutils literal notranslate"><span class="pre">b_eq</span></code>), the solver
+terminates with the appropriate status code. Note that presolve terminates
+as soon as any sign of unboundedness is detected; consequently, a problem
+may be reported as unbounded when in reality the problem is infeasible
+(but infeasibility has not been detected yet). Therefore, if it is
+important to know whether the problem is actually infeasible, solve the
+problem again with option <code class="docutils literal notranslate"><span class="pre">presolve=False</span></code>.</p>
+<p>If neither infeasibility nor unboundedness are detected in a single pass
+of the presolve, bounds are tightened where possible and fixed
+variables are removed from the problem. Then, linearly dependent rows
+of the <code class="docutils literal notranslate"><span class="pre">A_eq</span></code> matrix are removed, (unless they represent an
+infeasibility) to avoid numerical difficulties in the primary solve
+routine. Note that rows that are nearly linearly dependent (within a
+prescribed tolerance) may also be removed, which can change the optimal
+solution in rare cases. If this is a concern, eliminate redundancy from
+your problem formulation and run with option <code class="docutils literal notranslate"><span class="pre">rr=False</span></code> or
+<code class="docutils literal notranslate"><span class="pre">presolve=False</span></code>.</p>
+<p>Several potential improvements can be made here: additional presolve
+checks outlined in <a class="reference internal" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.linprog.html#ree0cad483161-8" id="id13">[8]</a> should be implemented, the presolve routine should
+be run multiple times (until no further simplifications can be made), and
+more of the efficiency improvements from <a class="reference internal" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.linprog.html#ree0cad483161-5" id="id14">[5]</a> should be implemented in the
+redundancy removal routines.</p>
+<p>After presolve, the problem is transformed to standard form by converting
+the (tightened) simple bounds to upper bound constraints, introducing
+non-negative slack variables for inequality constraints, and expressing
+unbounded variables as the difference between two non-negative variables.
+Optionally, the problem is automatically scaled via equilibration <a class="reference internal" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.linprog.html#ree0cad483161-12" id="id15">[12]</a>.
+The selected algorithm solves the standard form problem, and a
+postprocessing routine converts the result to a solution to the original
+problem.</p>
+<p class="rubric">References</p>
+<dl class="citation">
+<dt class="label" id="ree0cad483161-1"><span class="brackets"><a class="fn-backref" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.linprog.html#id10">1</a></span></dt>
+<dd><p>Dantzig, George B., Linear programming and extensions. Rand
+Corporation Research Study Princeton Univ. Press, Princeton, NJ,
+1963</p>
+</dd>
+<dt class="label" id="ree0cad483161-2"><span class="brackets"><a class="fn-backref" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.linprog.html#id11">2</a></span></dt>
+<dd><p>Hillier, S.H. and Lieberman, G.J. (1995), “Introduction to
+Mathematical Programming”, McGraw-Hill, Chapter 4.</p>
+</dd>
+<dt class="label" id="ree0cad483161-3"><span class="brackets">3</span></dt>
+<dd><p>Bland, Robert G. New finite pivoting rules for the simplex method.
+Mathematics of Operations Research (2), 1977: pp. 103-107.</p>
+</dd>
+<dt class="label" id="ree0cad483161-4"><span class="brackets"><a class="fn-backref" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.linprog.html#id7">4</a></span></dt>
+<dd><p>Andersen, Erling D., and Knud D. Andersen. “The MOSEK interior point
+optimizer for linear programming: an implementation of the
+homogeneous algorithm.” High performance optimization. Springer US,
+2000. 197-232.</p>
+</dd>
+<dt class="label" id="ree0cad483161-5"><span class="brackets">5</span><span class="fn-backref">(<a href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.linprog.html#id1">1</a>,<a href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.linprog.html#id2">2</a>,<a href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.linprog.html#id14">3</a>)</span></dt>
+<dd><p>Andersen, Erling D. “Finding all linearly dependent rows in
+large-scale linear programming.” Optimization Methods and Software
+6.3 (1995): 219-227.</p>
+</dd>
+<dt class="label" id="ree0cad483161-6"><span class="brackets">6</span></dt>
+<dd><p>Freund, Robert M. “Primal-Dual Interior-Point Methods for Linear
+Programming based on Newton’s Method.” Unpublished Course Notes,
+March 2004. Available 2/25/2017 at
+<a class="reference external" href="https://ocw.mit.edu/courses/sloan-school-of-management/15-084j-nonlinear-programming-spring-2004/lecture-notes/lec14_int_pt_mthd.pdf">https://ocw.mit.edu/courses/sloan-school-of-management/15-084j-nonlinear-programming-spring-2004/lecture-notes/lec14_int_pt_mthd.pdf</a></p>
+</dd>
+<dt class="label" id="ree0cad483161-7"><span class="brackets">7</span></dt>
+<dd><p>Fourer, Robert. “Solving Linear Programs by Interior-Point Methods.”
+Unpublished Course Notes, August 26, 2005. Available 2/25/2017 at
+<a class="reference external" href="http://www.4er.org/CourseNotes/Book%20B/B-III.pdf">http://www.4er.org/CourseNotes/Book%20B/B-III.pdf</a></p>
+</dd>
+<dt class="label" id="ree0cad483161-8"><span class="brackets">8</span><span class="fn-backref">(<a href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.linprog.html#id12">1</a>,<a href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.linprog.html#id13">2</a>)</span></dt>
+<dd><p>Andersen, Erling D., and Knud D. Andersen. “Presolving in linear
+programming.” Mathematical Programming 71.2 (1995): 221-245.</p>
+</dd>
+<dt class="label" id="ree0cad483161-9"><span class="brackets"><a class="fn-backref" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.linprog.html#id8">9</a></span></dt>
+<dd><p>Bertsimas, Dimitris, and J. Tsitsiklis. “Introduction to linear
+programming.” Athena Scientific 1 (1997): 997.</p>
+</dd>
+<dt class="label" id="ree0cad483161-10"><span class="brackets">10</span></dt>
+<dd><p>Andersen, Erling D., et al. Implementation of interior point
+methods for large scale linear programming. HEC/Universite de
+Geneve, 1996.</p>
+</dd>
+<dt class="label" id="ree0cad483161-11"><span class="brackets"><a class="fn-backref" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.linprog.html#id9">11</a></span></dt>
+<dd><p>Bartels, Richard H. “A stabilization of the simplex method.”
+Journal in  Numerische Mathematik 16.5 (1971): 414-434.</p>
+</dd>
+<dt class="label" id="ree0cad483161-12"><span class="brackets"><a class="fn-backref" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.linprog.html#id15">12</a></span></dt>
+<dd><p>Tomlin, J. A. “On scaling linear programming problems.”
+Mathematical Programming Study 4 (1975): 146-166.</p>
+</dd>
+<dt class="label" id="ree0cad483161-13"><span class="brackets">13</span><span class="fn-backref">(<a href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.linprog.html#id3">1</a>,<a href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.linprog.html#id4">2</a>,<a href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.linprog.html#id6">3</a>)</span></dt>
+<dd><p>Huangfu, Q., Galabova, I., Feldmeier, M., and Hall, J. A. J.
+“HiGHS - high performance software for linear optimization.”
+Accessed 4/16/2020 at <a class="reference external" href="https://www.maths.ed.ac.uk/hall/HiGHS/#guide">https://www.maths.ed.ac.uk/hall/HiGHS/#guide</a></p>
+</dd>
+<dt class="label" id="ree0cad483161-14"><span class="brackets"><a class="fn-backref" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.linprog.html#id5">14</a></span></dt>
+<dd><p>Huangfu, Q. and Hall, J. A. J. “Parallelizing the dual revised
+simplex method.” Mathematical Programming Computation, 10 (1),
+119-142, 2018. DOI: 10.1007/s12532-017-0130-5</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<p>Consider the following problem:</p>
+<div class="math notranslate nohighlight">
+<span class="MathJax_Preview" style="color: inherit; display: none;"></span><div class="MathJax_SVG_Display" style="text-align: center;"><span class="MathJax_SVG" id="MathJax-Element-10-Frame" tabindex="0" style="font-size: 100%; display: inline-block; position: relative;" data-mathml="&lt;math xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot; display=&quot;block&quot;&gt;&lt;mtable columnalign=&quot;right left&quot; rowspacing=&quot;3pt&quot; columnspacing=&quot;0em&quot; displaystyle=&quot;true&quot;&gt;&lt;mtr&gt;&lt;mtd&gt;&lt;munder&gt;&lt;mo movablelimits=&quot;true&quot; form=&quot;prefix&quot;&gt;min&lt;/mo&gt;&lt;mrow class=&quot;MJX-TeXAtom-ORD&quot;&gt;&lt;msub&gt;&lt;mi&gt;x&lt;/mi&gt;&lt;mn&gt;0&lt;/mn&gt;&lt;/msub&gt;&lt;mo&gt;,&lt;/mo&gt;&lt;msub&gt;&lt;mi&gt;x&lt;/mi&gt;&lt;mn&gt;1&lt;/mn&gt;&lt;/msub&gt;&lt;/mrow&gt;&lt;/munder&gt;&lt;mtext&gt;&amp;#xA0;&lt;/mtext&gt;&lt;mo&gt;&amp;#x2212;&lt;/mo&gt;&lt;msub&gt;&lt;mi&gt;x&lt;/mi&gt;&lt;mn&gt;0&lt;/mn&gt;&lt;/msub&gt;&lt;mo&gt;+&lt;/mo&gt;&lt;mn&gt;4&lt;/mn&gt;&lt;msub&gt;&lt;mi&gt;x&lt;/mi&gt;&lt;mn&gt;1&lt;/mn&gt;&lt;/msub&gt;&lt;/mtd&gt;&lt;mtd /&gt;&lt;/mtr&gt;&lt;mtr&gt;&lt;mtd&gt;&lt;mstyle displaystyle=&quot;false&quot; scriptlevel=&quot;0&quot;&gt;&lt;mtext&gt;such that&lt;/mtext&gt;&lt;/mstyle&gt;&lt;mtext&gt;&amp;#xA0;&lt;/mtext&gt;&lt;mo&gt;&amp;#x2212;&lt;/mo&gt;&lt;mn&gt;3&lt;/mn&gt;&lt;msub&gt;&lt;mi&gt;x&lt;/mi&gt;&lt;mn&gt;0&lt;/mn&gt;&lt;/msub&gt;&lt;mo&gt;+&lt;/mo&gt;&lt;msub&gt;&lt;mi&gt;x&lt;/mi&gt;&lt;mn&gt;1&lt;/mn&gt;&lt;/msub&gt;&lt;/mtd&gt;&lt;mtd&gt;&lt;mi&gt;&lt;/mi&gt;&lt;mo&gt;&amp;#x2264;&lt;/mo&gt;&lt;mn&gt;6&lt;/mn&gt;&lt;mo&gt;,&lt;/mo&gt;&lt;/mtd&gt;&lt;/mtr&gt;&lt;mtr&gt;&lt;mtd&gt;&lt;mo&gt;&amp;#x2212;&lt;/mo&gt;&lt;msub&gt;&lt;mi&gt;x&lt;/mi&gt;&lt;mn&gt;0&lt;/mn&gt;&lt;/msub&gt;&lt;mo&gt;&amp;#x2212;&lt;/mo&gt;&lt;mn&gt;2&lt;/mn&gt;&lt;msub&gt;&lt;mi&gt;x&lt;/mi&gt;&lt;mn&gt;1&lt;/mn&gt;&lt;/msub&gt;&lt;/mtd&gt;&lt;mtd&gt;&lt;mi&gt;&lt;/mi&gt;&lt;mo&gt;&amp;#x2265;&lt;/mo&gt;&lt;mo&gt;&amp;#x2212;&lt;/mo&gt;&lt;mn&gt;4&lt;/mn&gt;&lt;mo&gt;,&lt;/mo&gt;&lt;/mtd&gt;&lt;/mtr&gt;&lt;mtr&gt;&lt;mtd&gt;&lt;msub&gt;&lt;mi&gt;x&lt;/mi&gt;&lt;mn&gt;1&lt;/mn&gt;&lt;/msub&gt;&lt;/mtd&gt;&lt;mtd&gt;&lt;mi&gt;&lt;/mi&gt;&lt;mo&gt;&amp;#x2265;&lt;/mo&gt;&lt;mo&gt;&amp;#x2212;&lt;/mo&gt;&lt;mn&gt;3.&lt;/mn&gt;&lt;/mtd&gt;&lt;/mtr&gt;&lt;/mtable&gt;&lt;/math&gt;" role="presentation"><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="29.034ex" height="13.215ex" viewBox="0 -3092.1 12500.6 5689.8" role="img" focusable="false" style="vertical-align: -6.033ex;" aria-hidden="true"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="matrix(1 0 0 -1 0 0)"><g transform="translate(167,0)"><g transform="translate(-13,0)"><g transform="translate(2202,2219)"><use href="#MJMAIN-6D"></use><use href="#MJMAIN-69" x="833" y="0"></use><use href="#MJMAIN-6E" x="1112" y="0"></use><g transform="translate(10,-601)"><use transform="scale(0.707)" href="#MJMATHI-78" x="0" y="0"></use><use transform="scale(0.5)" href="#MJMAIN-30" x="809" y="-213"></use><use transform="scale(0.707)" href="#MJMAIN-2C" x="1026" y="0"></use><g transform="translate(922,0)"><use transform="scale(0.707)" href="#MJMATHI-78" x="0" y="0"></use><use transform="scale(0.5)" href="#MJMAIN-31" x="809" y="-213"></use></g></g><use href="#MJMAIN-2212" x="2307" y="0"></use><g transform="translate(3308,0)"><use href="#MJMATHI-78" x="0" y="0"></use><use transform="scale(0.707)" href="#MJMAIN-30" x="809" y="-213"></use></g><use href="#MJMAIN-2B" x="4556" y="0"></use><use href="#MJMAIN-34" x="5557" y="0"></use><g transform="translate(6057,0)"><use href="#MJMATHI-78" x="0" y="0"></use><use transform="scale(0.707)" href="#MJMAIN-31" x="809" y="-213"></use></g></g><g transform="translate(0,280)"><use href="#MJMAIN-73"></use><use href="#MJMAIN-75" x="394" y="0"></use><use href="#MJMAIN-63" x="951" y="0"></use><use href="#MJMAIN-68" x="1395" y="0"></use><use href="#MJMAIN-74" x="2202" y="0"></use><use href="#MJMAIN-68" x="2591" y="0"></use><use href="#MJMAIN-61" x="3148" y="0"></use><use href="#MJMAIN-74" x="3648" y="0"></use><use href="#MJMAIN-2212" x="4510" y="0"></use><use href="#MJMAIN-33" x="5510" y="0"></use><g transform="translate(6011,0)"><use href="#MJMATHI-78" x="0" y="0"></use><use transform="scale(0.707)" href="#MJMAIN-30" x="809" y="-213"></use></g><use href="#MJMAIN-2B" x="7260" y="0"></use><g transform="translate(8260,0)"><use href="#MJMATHI-78" x="0" y="0"></use><use transform="scale(0.707)" href="#MJMAIN-31" x="809" y="-213"></use></g></g><g transform="translate(4732,-1020)"><use href="#MJMAIN-2212" x="0" y="0"></use><g transform="translate(778,0)"><use href="#MJMATHI-78" x="0" y="0"></use><use transform="scale(0.707)" href="#MJMAIN-30" x="809" y="-213"></use></g><use href="#MJMAIN-2212" x="2027" y="0"></use><use href="#MJMAIN-32" x="3027" y="0"></use><g transform="translate(3528,0)"><use href="#MJMATHI-78" x="0" y="0"></use><use transform="scale(0.707)" href="#MJMAIN-31" x="809" y="-213"></use></g></g><g transform="translate(8260,-2320)"><use href="#MJMATHI-78" x="0" y="0"></use><use transform="scale(0.707)" href="#MJMAIN-31" x="809" y="-213"></use></g></g><g transform="translate(9275,0)"><g transform="translate(0,280)"><use href="#MJMAIN-2264" x="277" y="0"></use><use href="#MJMAIN-36" x="1334" y="0"></use><use href="#MJMAIN-2C" x="1834" y="0"></use></g><g transform="translate(0,-1020)"><use href="#MJMAIN-2265" x="277" y="0"></use><use href="#MJMAIN-2212" x="1334" y="0"></use><use href="#MJMAIN-34" x="2112" y="0"></use><use href="#MJMAIN-2C" x="2613" y="0"></use></g><g transform="translate(0,-2320)"><use href="#MJMAIN-2265" x="277" y="0"></use><use href="#MJMAIN-2212" x="1334" y="0"></use><g transform="translate(2112,0)"><use href="#MJMAIN-33"></use><use href="#MJMAIN-2E" x="500" y="0"></use></g></g></g></g></g></svg><span class="MJX_Assistive_MathML MJX_Assistive_MathML_Block" role="presentation"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mtable columnalign="right left" rowspacing="3pt" columnspacing="0em" displaystyle="true"><mtr><mtd><munder><mo movablelimits="true" form="prefix">min</mo><mrow class="MJX-TeXAtom-ORD"><msub><mi>x</mi><mn>0</mn></msub><mo>,</mo><msub><mi>x</mi><mn>1</mn></msub></mrow></munder><mtext>&nbsp;</mtext><mo>−</mo><msub><mi>x</mi><mn>0</mn></msub><mo>+</mo><mn>4</mn><msub><mi>x</mi><mn>1</mn></msub></mtd><mtd></mtd></mtr><mtr><mtd><mstyle displaystyle="false" scriptlevel="0"><mtext>such that</mtext></mstyle><mtext>&nbsp;</mtext><mo>−</mo><mn>3</mn><msub><mi>x</mi><mn>0</mn></msub><mo>+</mo><msub><mi>x</mi><mn>1</mn></msub></mtd><mtd><mi></mi><mo>≤</mo><mn>6</mn><mo>,</mo></mtd></mtr><mtr><mtd><mo>−</mo><msub><mi>x</mi><mn>0</mn></msub><mo>−</mo><mn>2</mn><msub><mi>x</mi><mn>1</mn></msub></mtd><mtd><mi></mi><mo>≥</mo><mo>−</mo><mn>4</mn><mo>,</mo></mtd></mtr><mtr><mtd><msub><mi>x</mi><mn>1</mn></msub></mtd><mtd><mi></mi><mo>≥</mo><mo>−</mo><mn>3.</mn></mtd></mtr></mtable></math></span></span></div><script type="math/tex; mode=display" id="MathJax-Element-10">\begin{split}\min_{x_0, x_1} \ -x_0 + 4x_1 & \\
+\mbox{such that} \ -3x_0 + x_1 & \leq 6,\\
+-x_0 - 2x_1 & \geq -4,\\
+x_1 & \geq -3.\end{split}</script></div>
+<p>The problem is not presented in the form accepted by <a class="reference internal" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.linprog.html#scipy.optimize.linprog" title="scipy.optimize.linprog"><code class="xref py py-obj docutils literal notranslate"><span class="pre">linprog</span></code></a>. This is
+easily remedied by converting the “greater than” inequality
+constraint to a “less than” inequality constraint by
+multiplying both sides by a factor of <span class="math notranslate nohighlight"><span class="MathJax_Preview" style="color: inherit; display: none;"></span><span class="MathJax_SVG" id="MathJax-Element-11-Frame" tabindex="0" data-mathml="&lt;math xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;&gt;&lt;mo&gt;&amp;#x2212;&lt;/mo&gt;&lt;mn&gt;1&lt;/mn&gt;&lt;/math&gt;" role="presentation" style="font-size: 100%; display: inline-block; position: relative;"><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="2.971ex" height="2.162ex" viewBox="0 -743.6 1279 931" role="img" focusable="false" style="vertical-align: -0.435ex;" aria-hidden="true"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="matrix(1 0 0 -1 0 0)"><use href="#MJMAIN-2212" x="0" y="0"></use><use href="#MJMAIN-31" x="778" y="0"></use></g></svg><span class="MJX_Assistive_MathML" role="presentation"><math xmlns="http://www.w3.org/1998/Math/MathML"><mo>−</mo><mn>1</mn></math></span></span><script type="math/tex" id="MathJax-Element-11">-1</script></span>. Note also that the last
+constraint is really the simple bound <span class="math notranslate nohighlight"><span class="MathJax_Preview" style="color: inherit; display: none;"></span><span class="MathJax_SVG" id="MathJax-Element-12-Frame" tabindex="0" data-mathml="&lt;math xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;&gt;&lt;mo&gt;&amp;#x2212;&lt;/mo&gt;&lt;mn&gt;3&lt;/mn&gt;&lt;mo&gt;&amp;#x2264;&lt;/mo&gt;&lt;msub&gt;&lt;mi&gt;x&lt;/mi&gt;&lt;mn&gt;1&lt;/mn&gt;&lt;/msub&gt;&lt;mo&gt;&amp;#x2264;&lt;/mo&gt;&lt;mi mathvariant=&quot;normal&quot;&gt;&amp;#x221E;&lt;/mi&gt;&lt;/math&gt;" role="presentation" style="font-size: 100%; display: inline-block; position: relative;"><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="13.875ex" height="2.306ex" viewBox="0 -743.6 5974 992.8" role="img" focusable="false" style="vertical-align: -0.579ex;" aria-hidden="true"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="matrix(1 0 0 -1 0 0)"><use href="#MJMAIN-2212" x="0" y="0"></use><use href="#MJMAIN-33" x="778" y="0"></use><use href="#MJMAIN-2264" x="1556" y="0"></use><g transform="translate(2613,0)"><use href="#MJMATHI-78" x="0" y="0"></use><use transform="scale(0.707)" href="#MJMAIN-31" x="809" y="-213"></use></g><use href="#MJMAIN-2264" x="3917" y="0"></use><use href="#MJMAIN-221E" x="4973" y="0"></use></g></svg><span class="MJX_Assistive_MathML" role="presentation"><math xmlns="http://www.w3.org/1998/Math/MathML"><mo>−</mo><mn>3</mn><mo>≤</mo><msub><mi>x</mi><mn>1</mn></msub><mo>≤</mo><mi mathvariant="normal">∞</mi></math></span></span><script type="math/tex" id="MathJax-Element-12">-3 \leq x_1 \leq \infty</script></span>.
+Finally, since there are no bounds on <span class="math notranslate nohighlight"><span class="MathJax_Preview" style="color: inherit; display: none;"></span><span class="MathJax_SVG" id="MathJax-Element-13-Frame" tabindex="0" data-mathml="&lt;math xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;&gt;&lt;msub&gt;&lt;mi&gt;x&lt;/mi&gt;&lt;mn&gt;0&lt;/mn&gt;&lt;/msub&gt;&lt;/math&gt;" role="presentation" style="font-size: 100%; display: inline-block; position: relative;"><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="2.384ex" height="1.875ex" viewBox="0 -558.2 1026.4 807.4" role="img" focusable="false" style="vertical-align: -0.579ex;" aria-hidden="true"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="matrix(1 0 0 -1 0 0)"><use href="#MJMATHI-78" x="0" y="0"></use><use transform="scale(0.707)" href="#MJMAIN-30" x="809" y="-213"></use></g></svg><span class="MJX_Assistive_MathML" role="presentation"><math xmlns="http://www.w3.org/1998/Math/MathML"><msub><mi>x</mi><mn>0</mn></msub></math></span></span><script type="math/tex" id="MathJax-Element-13">x_0</script></span>, we must explicitly
+specify the bounds <span class="math notranslate nohighlight"><span class="MathJax_Preview" style="color: inherit; display: none;"></span><span class="MathJax_SVG" id="MathJax-Element-14-Frame" tabindex="0" data-mathml="&lt;math xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;&gt;&lt;mo&gt;&amp;#x2212;&lt;/mo&gt;&lt;mi mathvariant=&quot;normal&quot;&gt;&amp;#x221E;&lt;/mi&gt;&lt;mo&gt;&amp;#x2264;&lt;/mo&gt;&lt;msub&gt;&lt;mi&gt;x&lt;/mi&gt;&lt;mn&gt;0&lt;/mn&gt;&lt;/msub&gt;&lt;mo&gt;&amp;#x2264;&lt;/mo&gt;&lt;mi mathvariant=&quot;normal&quot;&gt;&amp;#x221E;&lt;/mi&gt;&lt;/math&gt;" role="presentation" style="font-size: 100%; display: inline-block; position: relative;"><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="15.036ex" height="2.306ex" viewBox="0 -743.6 6474 992.8" role="img" focusable="false" style="vertical-align: -0.579ex;" aria-hidden="true"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="matrix(1 0 0 -1 0 0)"><use href="#MJMAIN-2212" x="0" y="0"></use><use href="#MJMAIN-221E" x="778" y="0"></use><use href="#MJMAIN-2264" x="2056" y="0"></use><g transform="translate(3113,0)"><use href="#MJMATHI-78" x="0" y="0"></use><use transform="scale(0.707)" href="#MJMAIN-30" x="809" y="-213"></use></g><use href="#MJMAIN-2264" x="4417" y="0"></use><use href="#MJMAIN-221E" x="5473" y="0"></use></g></svg><span class="MJX_Assistive_MathML" role="presentation"><math xmlns="http://www.w3.org/1998/Math/MathML"><mo>−</mo><mi mathvariant="normal">∞</mi><mo>≤</mo><msub><mi>x</mi><mn>0</mn></msub><mo>≤</mo><mi mathvariant="normal">∞</mi></math></span></span><script type="math/tex" id="MathJax-Element-14">-\infty \leq x_0 \leq \infty</script></span>, as the
+default is for variables to be non-negative. After collecting coeffecients
+into arrays and tuples, the input for this problem is:</p>
+<div class="doctest highlight-default notranslate" style="position: relative;"><div class="highlight"><span class="copybutton" title="Hide the prompts and output" style="cursor: pointer; position: absolute; top: 0px; right: 0px; border-color: rgb(51, 51, 51); border-style: none; border-width: 0px; color: rgb(51, 51, 51); font-family: monospace; padding-left: 0.2em; padding-right: 0.2em; border-radius: 0px 3px 0px 0px;">&gt;&gt;&gt;</span><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">c</span> <span class="o">=</span> <span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">A</span> <span class="o">=</span> <span class="p">[[</span><span class="o">-</span><span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">]]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">b</span> <span class="o">=</span> <span class="p">[</span><span class="mi">6</span><span class="p">,</span> <span class="mi">4</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">x0_bounds</span> <span class="o">=</span> <span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">x1_bounds</span> <span class="o">=</span> <span class="p">(</span><span class="o">-</span><span class="mi">3</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">scipy.optimize</span> <span class="kn">import</span> <span class="n">linprog</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">res</span> <span class="o">=</span> <span class="n">linprog</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="n">A_ub</span><span class="o">=</span><span class="n">A</span><span class="p">,</span> <span class="n">b_ub</span><span class="o">=</span><span class="n">b</span><span class="p">,</span> <span class="n">bounds</span><span class="o">=</span><span class="p">[</span><span class="n">x0_bounds</span><span class="p">,</span> <span class="n">x1_bounds</span><span class="p">])</span>
+</pre></div>
+</div>
+<p>Note that the default method for <a class="reference internal" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.linprog.html#scipy.optimize.linprog" title="scipy.optimize.linprog"><code class="xref py py-obj docutils literal notranslate"><span class="pre">linprog</span></code></a> is ‘interior-point’, which is
+approximate by nature.</p>
+<div class="doctest highlight-default notranslate" style="position: relative;"><div class="highlight"><span class="copybutton" title="Hide the prompts and output" style="cursor: pointer; position: absolute; top: 0px; right: 0px; border-color: rgb(51, 51, 51); border-style: none; border-width: 0px; color: rgb(51, 51, 51); font-family: monospace; padding-left: 0.2em; padding-right: 0.2em; border-radius: 0px 3px 0px 0px;">&gt;&gt;&gt;</span><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">res</span><span class="p">)</span>
+<span class="go">     con: array([], dtype=float64)</span>
+<span class="go">     fun: -21.99999984082494 # may vary</span>
+<span class="go"> message: 'Optimization terminated successfully.'</span>
+<span class="go">     nit: 6 # may vary</span>
+<span class="go">   slack: array([3.89999997e+01, 8.46872439e-08] # may vary</span>
+<span class="go">  status: 0</span>
+<span class="go"> success: True</span>
+<span class="go">       x: array([ 9.99999989, -2.99999999]) # may vary</span>
+</pre></div>
+</div>
+<p>If you need greater accuracy, try ‘revised simplex’.</p>
+<div class="doctest highlight-default notranslate" style="position: relative;"><div class="highlight"><span class="copybutton" title="Hide the prompts and output" style="cursor: pointer; position: absolute; top: 0px; right: 0px; border-color: rgb(51, 51, 51); border-style: none; border-width: 0px; color: rgb(51, 51, 51); font-family: monospace; padding-left: 0.2em; padding-right: 0.2em; border-radius: 0px 3px 0px 0px;">&gt;&gt;&gt;</span><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">res</span> <span class="o">=</span> <span class="n">linprog</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="n">A_ub</span><span class="o">=</span><span class="n">A</span><span class="p">,</span> <span class="n">b_ub</span><span class="o">=</span><span class="n">b</span><span class="p">,</span> <span class="n">bounds</span><span class="o">=</span><span class="p">[</span><span class="n">x0_bounds</span><span class="p">,</span> <span class="n">x1_bounds</span><span class="p">],</span> <span class="n">method</span><span class="o">=</span><span class="s1">'revised simplex'</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">res</span><span class="p">)</span>
+<span class="go">     con: array([], dtype=float64)</span>
+<span class="go">     fun: -22.0 # may vary</span>
+<span class="go"> message: 'Optimization terminated successfully.'</span>
+<span class="go">     nit: 1 # may vary</span>
+<span class="go">   slack: array([39.,  0.]) # may vary</span>
+<span class="go">  status: 0</span>
+<span class="go"> success: True</span>
+<span class="go">       x: array([10., -3.]) # may vary</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+          </div>
+      <div class="spc-rightsidebar span3">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="https://docs.scipy.org/doc/scipy/reference/optimize.root-dfsane.html" title="previous chapter">root(method=’df-sane’)</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="https://docs.scipy.org/doc/scipy/reference/optimize.linprog-simplex.html" title="next chapter">linprog(method=’simplex’)</a></p>
+<div id="searchbox" style="" role="search">
+  <h4>Quick search</h4>
+    <div>
+    <form class="search" action="https://docs.scipy.org/doc/scipy/reference/search.html" method="get">
+      <input type="text" style="width: inherit;" name="q">
+      <input type="submit" value="search">
+      <input type="hidden" name="check_keywords" value="yes">
+      <input type="hidden" name="area" value="default">
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container container-navbar-bottom">
+      <div class="spc-navbar">
+        
+      </div>
+    </div>
+    <div class="container">
+    <div class="footer">
+    <div class="row-fluid">
+    <ul class="inline pull-left">
+      <li>
+        © Copyright 2008-2020, The SciPy community.
+      </li>
+      <li>
+      Last updated on Dec 31, 2020.
+      </li>
+      <li>
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 3.1.2.
+      </li>
+    </ul>
+    </div>
+    </div>
+    </div>
+  
+</body></html>

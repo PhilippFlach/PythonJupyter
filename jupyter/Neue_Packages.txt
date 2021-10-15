@@ -1,0 +1,3 @@
+Weitere bibliotheken in Visual Studio unter Tools --> Python --> Python Environments
+Python 3.7
+Dann auf Overview --> Packages und Package eingeben
